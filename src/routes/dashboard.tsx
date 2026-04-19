@@ -20,6 +20,9 @@ import {
   CheckCircle2,
   XCircle,
   Clock,
+  GitBranch,
+  TrendingUp,
+  Zap,
 } from "lucide-react";
 import { AppLayout } from "@/components/AppLayout";
 import { Topbar } from "@/components/Topbar";
@@ -32,6 +35,7 @@ import {
   trendData,
   usageByChannel,
 } from "@/lib/mock-data";
+import { omnichannelStats } from "@/lib/conversations";
 import { cn } from "@/lib/utils";
 import { formatDistanceToNow } from "date-fns";
 
