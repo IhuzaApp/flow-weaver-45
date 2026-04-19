@@ -10,15 +10,23 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TemplatesRouteImport } from './routes/templates'
+import { Route as SignupRouteImport } from './routes/signup'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as MessagesRouteImport } from './routes/messages'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as FlowsRouteImport } from './routes/flows'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ApiKeysRouteImport } from './routes/api-keys'
+import { Route as IndexRouteImport } from './routes/index'
 
 const TemplatesRoute = TemplatesRouteImport.update({
   id: '/templates',
   path: '/templates',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SignupRoute = SignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SettingsRoute = SettingsRouteImport.update({
@@ -29,6 +37,11 @@ const SettingsRoute = SettingsRouteImport.update({
 const MessagesRoute = MessagesRouteImport.update({
   id: '/messages',
   path: '/messages',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FlowsRoute = FlowsRouteImport.update({
@@ -46,65 +59,91 @@ const ApiKeysRoute = ApiKeysRouteImport.update({
   path: '/api-keys',
   getParentRoute: () => rootRouteImport,
 } as any)
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
+  '/': typeof IndexRoute
   '/api-keys': typeof ApiKeysRoute
   '/dashboard': typeof DashboardRoute
   '/flows': typeof FlowsRoute
+  '/login': typeof LoginRoute
   '/messages': typeof MessagesRoute
   '/settings': typeof SettingsRoute
+  '/signup': typeof SignupRoute
   '/templates': typeof TemplatesRoute
 }
 export interface FileRoutesByTo {
+  '/': typeof IndexRoute
   '/api-keys': typeof ApiKeysRoute
   '/dashboard': typeof DashboardRoute
   '/flows': typeof FlowsRoute
+  '/login': typeof LoginRoute
   '/messages': typeof MessagesRoute
   '/settings': typeof SettingsRoute
+  '/signup': typeof SignupRoute
   '/templates': typeof TemplatesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
   '/api-keys': typeof ApiKeysRoute
   '/dashboard': typeof DashboardRoute
   '/flows': typeof FlowsRoute
+  '/login': typeof LoginRoute
   '/messages': typeof MessagesRoute
   '/settings': typeof SettingsRoute
+  '/signup': typeof SignupRoute
   '/templates': typeof TemplatesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/'
     | '/api-keys'
     | '/dashboard'
     | '/flows'
+    | '/login'
     | '/messages'
     | '/settings'
+    | '/signup'
     | '/templates'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/'
     | '/api-keys'
     | '/dashboard'
     | '/flows'
+    | '/login'
     | '/messages'
     | '/settings'
+    | '/signup'
     | '/templates'
   id:
     | '__root__'
+    | '/'
     | '/api-keys'
     | '/dashboard'
     | '/flows'
+    | '/login'
     | '/messages'
     | '/settings'
+    | '/signup'
     | '/templates'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
   ApiKeysRoute: typeof ApiKeysRoute
   DashboardRoute: typeof DashboardRoute
   FlowsRoute: typeof FlowsRoute
+  LoginRoute: typeof LoginRoute
   MessagesRoute: typeof MessagesRoute
   SettingsRoute: typeof SettingsRoute
+  SignupRoute: typeof SignupRoute
   TemplatesRoute: typeof TemplatesRoute
 }
 
@@ -115,6 +154,13 @@ declare module '@tanstack/react-router' {
       path: '/templates'
       fullPath: '/templates'
       preLoaderRoute: typeof TemplatesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/settings': {
@@ -129,6 +175,13 @@ declare module '@tanstack/react-router' {
       path: '/messages'
       fullPath: '/messages'
       preLoaderRoute: typeof MessagesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/flows': {
@@ -152,15 +205,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiKeysRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
   ApiKeysRoute: ApiKeysRoute,
   DashboardRoute: DashboardRoute,
   FlowsRoute: FlowsRoute,
+  LoginRoute: LoginRoute,
   MessagesRoute: MessagesRoute,
   SettingsRoute: SettingsRoute,
+  SignupRoute: SignupRoute,
   TemplatesRoute: TemplatesRoute,
 }
 export const routeTree = rootRouteImport
