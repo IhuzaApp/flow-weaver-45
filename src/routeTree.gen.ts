@@ -10,9 +10,15 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TemplatesRouteImport } from './routes/templates'
+import { Route as SignupRouteImport } from './routes/signup'
 import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as ProjectsRouteImport } from './routes/projects'
+import { Route as PlaygroundRouteImport } from './routes/playground'
 import { Route as MessagesRouteImport } from './routes/messages'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as FlowsRouteImport } from './routes/flows'
+import { Route as EnvRouteImport } from './routes/env'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ApiKeysRouteImport } from './routes/api-keys'
 import { Route as IndexRouteImport } from './routes/index'
 
@@ -21,9 +27,24 @@ const TemplatesRoute = TemplatesRouteImport.update({
   path: '/templates',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SignupRoute = SignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SettingsRoute = SettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjectsRoute = ProjectsRouteImport.update({
+  id: '/projects',
+  path: '/projects',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlaygroundRoute = PlaygroundRouteImport.update({
+  id: '/playground',
+  path: '/playground',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MessagesRoute = MessagesRouteImport.update({
@@ -31,9 +52,24 @@ const MessagesRoute = MessagesRouteImport.update({
   path: '/messages',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FlowsRoute = FlowsRouteImport.update({
   id: '/flows',
   path: '/flows',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnvRoute = EnvRouteImport.update({
+  id: '/env',
+  path: '/env',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiKeysRoute = ApiKeysRouteImport.update({
@@ -50,26 +86,44 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/api-keys': typeof ApiKeysRoute
+  '/dashboard': typeof DashboardRoute
+  '/env': typeof EnvRoute
   '/flows': typeof FlowsRoute
+  '/login': typeof LoginRoute
   '/messages': typeof MessagesRoute
+  '/playground': typeof PlaygroundRoute
+  '/projects': typeof ProjectsRoute
   '/settings': typeof SettingsRoute
+  '/signup': typeof SignupRoute
   '/templates': typeof TemplatesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/api-keys': typeof ApiKeysRoute
+  '/dashboard': typeof DashboardRoute
+  '/env': typeof EnvRoute
   '/flows': typeof FlowsRoute
+  '/login': typeof LoginRoute
   '/messages': typeof MessagesRoute
+  '/playground': typeof PlaygroundRoute
+  '/projects': typeof ProjectsRoute
   '/settings': typeof SettingsRoute
+  '/signup': typeof SignupRoute
   '/templates': typeof TemplatesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/api-keys': typeof ApiKeysRoute
+  '/dashboard': typeof DashboardRoute
+  '/env': typeof EnvRoute
   '/flows': typeof FlowsRoute
+  '/login': typeof LoginRoute
   '/messages': typeof MessagesRoute
+  '/playground': typeof PlaygroundRoute
+  '/projects': typeof ProjectsRoute
   '/settings': typeof SettingsRoute
+  '/signup': typeof SignupRoute
   '/templates': typeof TemplatesRoute
 }
 export interface FileRouteTypes {
@@ -77,28 +131,58 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/api-keys'
+    | '/dashboard'
+    | '/env'
     | '/flows'
+    | '/login'
     | '/messages'
+    | '/playground'
+    | '/projects'
     | '/settings'
+    | '/signup'
     | '/templates'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api-keys' | '/flows' | '/messages' | '/settings' | '/templates'
+  to:
+    | '/'
+    | '/api-keys'
+    | '/dashboard'
+    | '/env'
+    | '/flows'
+    | '/login'
+    | '/messages'
+    | '/playground'
+    | '/projects'
+    | '/settings'
+    | '/signup'
+    | '/templates'
   id:
     | '__root__'
     | '/'
     | '/api-keys'
+    | '/dashboard'
+    | '/env'
     | '/flows'
+    | '/login'
     | '/messages'
+    | '/playground'
+    | '/projects'
     | '/settings'
+    | '/signup'
     | '/templates'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ApiKeysRoute: typeof ApiKeysRoute
+  DashboardRoute: typeof DashboardRoute
+  EnvRoute: typeof EnvRoute
   FlowsRoute: typeof FlowsRoute
+  LoginRoute: typeof LoginRoute
   MessagesRoute: typeof MessagesRoute
+  PlaygroundRoute: typeof PlaygroundRoute
+  ProjectsRoute: typeof ProjectsRoute
   SettingsRoute: typeof SettingsRoute
+  SignupRoute: typeof SignupRoute
   TemplatesRoute: typeof TemplatesRoute
 }
 
@@ -111,11 +195,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TemplatesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/settings': {
       id: '/settings'
       path: '/settings'
       fullPath: '/settings'
       preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/projects': {
+      id: '/projects'
+      path: '/projects'
+      fullPath: '/projects'
+      preLoaderRoute: typeof ProjectsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/playground': {
+      id: '/playground'
+      path: '/playground'
+      fullPath: '/playground'
+      preLoaderRoute: typeof PlaygroundRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/messages': {
@@ -125,11 +230,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MessagesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/flows': {
       id: '/flows'
       path: '/flows'
       fullPath: '/flows'
       preLoaderRoute: typeof FlowsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/env': {
+      id: '/env'
+      path: '/env'
+      fullPath: '/env'
+      preLoaderRoute: typeof EnvRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api-keys': {
@@ -152,11 +278,26 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ApiKeysRoute: ApiKeysRoute,
+  DashboardRoute: DashboardRoute,
+  EnvRoute: EnvRoute,
   FlowsRoute: FlowsRoute,
+  LoginRoute: LoginRoute,
   MessagesRoute: MessagesRoute,
+  PlaygroundRoute: PlaygroundRoute,
+  ProjectsRoute: ProjectsRoute,
   SettingsRoute: SettingsRoute,
+  SignupRoute: SignupRoute,
   TemplatesRoute: TemplatesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}
