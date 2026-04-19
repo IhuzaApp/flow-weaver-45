@@ -12,9 +12,12 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as TemplatesRouteImport } from './routes/templates'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as ProjectsRouteImport } from './routes/projects'
+import { Route as PlaygroundRouteImport } from './routes/playground'
 import { Route as MessagesRouteImport } from './routes/messages'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as FlowsRouteImport } from './routes/flows'
+import { Route as EnvRouteImport } from './routes/env'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ApiKeysRouteImport } from './routes/api-keys'
 import { Route as IndexRouteImport } from './routes/index'
@@ -34,6 +37,16 @@ const SettingsRoute = SettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProjectsRoute = ProjectsRouteImport.update({
+  id: '/projects',
+  path: '/projects',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlaygroundRoute = PlaygroundRouteImport.update({
+  id: '/playground',
+  path: '/playground',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MessagesRoute = MessagesRouteImport.update({
   id: '/messages',
   path: '/messages',
@@ -47,6 +60,11 @@ const LoginRoute = LoginRouteImport.update({
 const FlowsRoute = FlowsRouteImport.update({
   id: '/flows',
   path: '/flows',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnvRoute = EnvRouteImport.update({
+  id: '/env',
+  path: '/env',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardRoute = DashboardRouteImport.update({
@@ -69,9 +87,12 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/api-keys': typeof ApiKeysRoute
   '/dashboard': typeof DashboardRoute
+  '/env': typeof EnvRoute
   '/flows': typeof FlowsRoute
   '/login': typeof LoginRoute
   '/messages': typeof MessagesRoute
+  '/playground': typeof PlaygroundRoute
+  '/projects': typeof ProjectsRoute
   '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
   '/templates': typeof TemplatesRoute
@@ -80,9 +101,12 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/api-keys': typeof ApiKeysRoute
   '/dashboard': typeof DashboardRoute
+  '/env': typeof EnvRoute
   '/flows': typeof FlowsRoute
   '/login': typeof LoginRoute
   '/messages': typeof MessagesRoute
+  '/playground': typeof PlaygroundRoute
+  '/projects': typeof ProjectsRoute
   '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
   '/templates': typeof TemplatesRoute
@@ -92,9 +116,12 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/api-keys': typeof ApiKeysRoute
   '/dashboard': typeof DashboardRoute
+  '/env': typeof EnvRoute
   '/flows': typeof FlowsRoute
   '/login': typeof LoginRoute
   '/messages': typeof MessagesRoute
+  '/playground': typeof PlaygroundRoute
+  '/projects': typeof ProjectsRoute
   '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
   '/templates': typeof TemplatesRoute
@@ -105,9 +132,12 @@ export interface FileRouteTypes {
     | '/'
     | '/api-keys'
     | '/dashboard'
+    | '/env'
     | '/flows'
     | '/login'
     | '/messages'
+    | '/playground'
+    | '/projects'
     | '/settings'
     | '/signup'
     | '/templates'
@@ -116,9 +146,12 @@ export interface FileRouteTypes {
     | '/'
     | '/api-keys'
     | '/dashboard'
+    | '/env'
     | '/flows'
     | '/login'
     | '/messages'
+    | '/playground'
+    | '/projects'
     | '/settings'
     | '/signup'
     | '/templates'
@@ -127,9 +160,12 @@ export interface FileRouteTypes {
     | '/'
     | '/api-keys'
     | '/dashboard'
+    | '/env'
     | '/flows'
     | '/login'
     | '/messages'
+    | '/playground'
+    | '/projects'
     | '/settings'
     | '/signup'
     | '/templates'
@@ -139,9 +175,12 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ApiKeysRoute: typeof ApiKeysRoute
   DashboardRoute: typeof DashboardRoute
+  EnvRoute: typeof EnvRoute
   FlowsRoute: typeof FlowsRoute
   LoginRoute: typeof LoginRoute
   MessagesRoute: typeof MessagesRoute
+  PlaygroundRoute: typeof PlaygroundRoute
+  ProjectsRoute: typeof ProjectsRoute
   SettingsRoute: typeof SettingsRoute
   SignupRoute: typeof SignupRoute
   TemplatesRoute: typeof TemplatesRoute
@@ -170,6 +209,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/projects': {
+      id: '/projects'
+      path: '/projects'
+      fullPath: '/projects'
+      preLoaderRoute: typeof ProjectsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/playground': {
+      id: '/playground'
+      path: '/playground'
+      fullPath: '/playground'
+      preLoaderRoute: typeof PlaygroundRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/messages': {
       id: '/messages'
       path: '/messages'
@@ -189,6 +242,13 @@ declare module '@tanstack/react-router' {
       path: '/flows'
       fullPath: '/flows'
       preLoaderRoute: typeof FlowsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/env': {
+      id: '/env'
+      path: '/env'
+      fullPath: '/env'
+      preLoaderRoute: typeof EnvRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard': {
@@ -219,9 +279,12 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ApiKeysRoute: ApiKeysRoute,
   DashboardRoute: DashboardRoute,
+  EnvRoute: EnvRoute,
   FlowsRoute: FlowsRoute,
   LoginRoute: LoginRoute,
   MessagesRoute: MessagesRoute,
+  PlaygroundRoute: PlaygroundRoute,
+  ProjectsRoute: ProjectsRoute,
   SettingsRoute: SettingsRoute,
   SignupRoute: SignupRoute,
   TemplatesRoute: TemplatesRoute,
