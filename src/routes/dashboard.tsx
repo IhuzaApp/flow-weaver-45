@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   Area,
   AreaChart,
@@ -181,7 +181,7 @@ function Dashboard() {
                 <div className="text-sm font-medium text-foreground">Recent activity</div>
                 <div className="text-xs text-muted-foreground">Latest messages across all channels</div>
               </div>
-              <a href="/messages" className="text-xs font-medium text-primary hover:underline">View all →</a>
+              <Link to="/messages" className="text-xs font-medium text-primary hover:underline">View all →</Link>
             </div>
             <div className="divide-y divide-border">
               {recent.map((m) => {
