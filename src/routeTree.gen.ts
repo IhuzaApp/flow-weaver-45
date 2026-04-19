@@ -13,8 +13,8 @@ import { Route as TemplatesRouteImport } from './routes/templates'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as MessagesRouteImport } from './routes/messages'
 import { Route as FlowsRouteImport } from './routes/flows'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ApiKeysRouteImport } from './routes/api-keys'
-import { Route as IndexRouteImport } from './routes/index'
 
 const TemplatesRoute = TemplatesRouteImport.update({
   id: '/templates',
@@ -36,28 +36,28 @@ const FlowsRoute = FlowsRouteImport.update({
   path: '/flows',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiKeysRoute = ApiKeysRouteImport.update({
   id: '/api-keys',
   path: '/api-keys',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
   '/api-keys': typeof ApiKeysRoute
+  '/dashboard': typeof DashboardRoute
   '/flows': typeof FlowsRoute
   '/messages': typeof MessagesRoute
   '/settings': typeof SettingsRoute
   '/templates': typeof TemplatesRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
   '/api-keys': typeof ApiKeysRoute
+  '/dashboard': typeof DashboardRoute
   '/flows': typeof FlowsRoute
   '/messages': typeof MessagesRoute
   '/settings': typeof SettingsRoute
@@ -65,8 +65,8 @@ export interface FileRoutesByTo {
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
   '/api-keys': typeof ApiKeysRoute
+  '/dashboard': typeof DashboardRoute
   '/flows': typeof FlowsRoute
   '/messages': typeof MessagesRoute
   '/settings': typeof SettingsRoute
@@ -75,18 +75,24 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/'
     | '/api-keys'
+    | '/dashboard'
     | '/flows'
     | '/messages'
     | '/settings'
     | '/templates'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api-keys' | '/flows' | '/messages' | '/settings' | '/templates'
+  to:
+    | '/api-keys'
+    | '/dashboard'
+    | '/flows'
+    | '/messages'
+    | '/settings'
+    | '/templates'
   id:
     | '__root__'
-    | '/'
     | '/api-keys'
+    | '/dashboard'
     | '/flows'
     | '/messages'
     | '/settings'
@@ -94,8 +100,8 @@ export interface FileRouteTypes {
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
   ApiKeysRoute: typeof ApiKeysRoute
+  DashboardRoute: typeof DashboardRoute
   FlowsRoute: typeof FlowsRoute
   MessagesRoute: typeof MessagesRoute
   SettingsRoute: typeof SettingsRoute
@@ -132,6 +138,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FlowsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api-keys': {
       id: '/api-keys'
       path: '/api-keys'
@@ -139,19 +152,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiKeysRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
   ApiKeysRoute: ApiKeysRoute,
+  DashboardRoute: DashboardRoute,
   FlowsRoute: FlowsRoute,
   MessagesRoute: MessagesRoute,
   SettingsRoute: SettingsRoute,
@@ -160,3 +166,12 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}

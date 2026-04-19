@@ -35,7 +35,7 @@ import {
 import { cn } from "@/lib/utils";
 import { formatDistanceToNow } from "date-fns";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/dashboard")({
   head: () => ({
     meta: [
       { title: "Dashboard — Relay" },
