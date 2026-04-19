@@ -10,14 +10,14 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const nav = [
+const nav: Array<{ to: string; label: string; icon: typeof LayoutDashboard; exact?: boolean }> = [
   { to: "/", label: "Dashboard", icon: LayoutDashboard, exact: true },
   { to: "/flows", label: "Flows", icon: Workflow },
   { to: "/messages", label: "Messages", icon: MessageSquare },
   { to: "/api-keys", label: "API Keys", icon: KeyRound },
   { to: "/templates", label: "Templates", icon: FileText },
   { to: "/settings", label: "Settings", icon: Settings },
-] as const;
+];
 
 export function AppSidebar() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
