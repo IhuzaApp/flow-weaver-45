@@ -178,6 +178,8 @@ function Dashboard() {
           </Card>
         </div>
 
+        <OmnichannelInsights />
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <Card className="lg:col-span-2">
             <div className="flex items-center justify-between p-5 border-b border-border">
@@ -265,5 +267,110 @@ function Dashboard() {
         </div>
       </main>
     </AppLayout>
+  );
+}
+
+function OmnichannelInsights() {
+  const top = omnichannelStats.bestChannelByDelivery;
+  const topMeta = channelMeta[top.channel];
+  return (
+    <Card className="overflow-hidden">
+      <div className="p-5 border-b border-border flex items-center justify-between gap-3">
+        <div>
+          <div className="text-xs font-semibold uppercase tracking-wider text-primary">Omnichannel</div>
+          <div className="mt-0.5 text-sm font-medium text-foreground">Cross-channel performance</div>
+        </div>
+        <Link to="/messages" className="text-xs font-medium text-primary hover:underline">
+          Open conversations →
+        </Link>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-4 divide-y lg:divide-y-0 lg:divide-x divide-border">
+        <InsightTile
+          icon={GitBranch}
+          accent="bg-warning/15 text-warning-foreground"
+          label="Fallback rate"
+          value={`${omnichannelStats.fallbackRate}%`}
+          hint={`+${omnichannelStats.fallbackTrend}% this week`}
+        />
+        <InsightTile
+          icon={CheckCircle2}
+          accent={cn(topMeta.bg, topMeta.color)}
+          label="Best channel (delivery)"
+          value={topMeta.label}
+          hint={`${top.rate}% delivered`}
+        />
+        <InsightTile
+          icon={TrendingUp}
+          accent="bg-info/10 text-info"
+          label="Engagement rate"
+          value={`${omnichannelStats.engagementRate}%`}
+          hint="Opens + replies / sent"
+        />
+        <InsightTile
+          icon={Zap}
+          accent="bg-channel-ai/10 text-channel-ai"
+          label="Active omnichannel flows"
+          value="14"
+          hint="of 24 total flows"
+        />
+      </div>
+
+      <div className="p-5 border-t border-border">
+        <div className="text-xs font-medium text-foreground mb-3">Channel comparison</div>
+        <div className="space-y-3">
+          {omnichannelStats.channelComparison.map((c) => (
+            <div key={c.channel} className="grid grid-cols-[80px_1fr_60px_60px] items-center gap-3 text-xs">
+              <div className="font-medium text-foreground">{c.channel}</div>
+              <div className="space-y-1">
+                <div className="h-1.5 w-full rounded-full bg-muted overflow-hidden">
+                  <div className="h-full rounded-full bg-success" style={{ width: `${c.delivery}%` }} />
+                </div>
+                <div className="h-1.5 w-full rounded-full bg-muted overflow-hidden">
+                  <div className="h-full rounded-full bg-info" style={{ width: `${c.engagement}%` }} />
+                </div>
+              </div>
+              <div className="text-right text-success font-medium">{c.delivery}%</div>
+              <div className="text-right text-info font-medium">{c.engagement}%</div>
+            </div>
+          ))}
+        </div>
+        <div className="mt-3 flex items-center gap-4 text-[10px] text-muted-foreground">
+          <span className="flex items-center gap-1.5">
+            <span className="h-1.5 w-3 rounded-full bg-success" /> Delivery
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="h-1.5 w-3 rounded-full bg-info" /> Engagement
+          </span>
+        </div>
+      </div>
+    </Card>
+  );
+}
+
+function InsightTile({
+  icon: Icon,
+  accent,
+  label,
+  value,
+  hint,
+}: {
+  icon: React.ComponentType<{ className?: string }>;
+  accent: string;
+  label: string;
+  value: string;
+  hint: string;
+}) {
+  return (
+    <div className="p-5">
+      <div className="flex items-start justify-between">
+        <div className="text-xs text-muted-foreground">{label}</div>
+        <div className={cn("h-8 w-8 rounded-lg flex items-center justify-center", accent)}>
+          <Icon className="h-4 w-4" />
+        </div>
+      </div>
+      <div className="mt-3 text-xl font-semibold text-foreground">{value}</div>
+      <div className="mt-1 text-[11px] text-muted-foreground">{hint}</div>
+    </div>
   );
 }
