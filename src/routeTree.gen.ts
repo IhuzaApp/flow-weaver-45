@@ -9,19 +9,30 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as VoiceRouteImport } from './routes/voice'
 import { Route as TemplatesRouteImport } from './routes/templates'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as PlaygroundRouteImport } from './routes/playground'
+import { Route as PaymentsRouteImport } from './routes/payments'
 import { Route as MessagesRouteImport } from './routes/messages'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as IntegrationsRouteImport } from './routes/integrations'
+import { Route as InboxRouteImport } from './routes/inbox'
 import { Route as FlowsRouteImport } from './routes/flows'
 import { Route as EnvRouteImport } from './routes/env'
+import { Route as DevApiRouteImport } from './routes/dev-api'
 import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as CampaignsRouteImport } from './routes/campaigns'
 import { Route as ApiKeysRouteImport } from './routes/api-keys'
 import { Route as IndexRouteImport } from './routes/index'
 
+const VoiceRoute = VoiceRouteImport.update({
+  id: '/voice',
+  path: '/voice',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TemplatesRoute = TemplatesRouteImport.update({
   id: '/templates',
   path: '/templates',
@@ -47,6 +58,11 @@ const PlaygroundRoute = PlaygroundRouteImport.update({
   path: '/playground',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PaymentsRoute = PaymentsRouteImport.update({
+  id: '/payments',
+  path: '/payments',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MessagesRoute = MessagesRouteImport.update({
   id: '/messages',
   path: '/messages',
@@ -55,6 +71,16 @@ const MessagesRoute = MessagesRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntegrationsRoute = IntegrationsRouteImport.update({
+  id: '/integrations',
+  path: '/integrations',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InboxRoute = InboxRouteImport.update({
+  id: '/inbox',
+  path: '/inbox',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FlowsRoute = FlowsRouteImport.update({
@@ -67,9 +93,19 @@ const EnvRoute = EnvRouteImport.update({
   path: '/env',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DevApiRoute = DevApiRouteImport.update({
+  id: '/dev-api',
+  path: '/dev-api',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CampaignsRoute = CampaignsRouteImport.update({
+  id: '/campaigns',
+  path: '/campaigns',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiKeysRoute = ApiKeysRouteImport.update({
@@ -86,108 +122,157 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/api-keys': typeof ApiKeysRoute
+  '/campaigns': typeof CampaignsRoute
   '/dashboard': typeof DashboardRoute
+  '/dev-api': typeof DevApiRoute
   '/env': typeof EnvRoute
   '/flows': typeof FlowsRoute
+  '/inbox': typeof InboxRoute
+  '/integrations': typeof IntegrationsRoute
   '/login': typeof LoginRoute
   '/messages': typeof MessagesRoute
+  '/payments': typeof PaymentsRoute
   '/playground': typeof PlaygroundRoute
   '/projects': typeof ProjectsRoute
   '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
   '/templates': typeof TemplatesRoute
+  '/voice': typeof VoiceRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/api-keys': typeof ApiKeysRoute
+  '/campaigns': typeof CampaignsRoute
   '/dashboard': typeof DashboardRoute
+  '/dev-api': typeof DevApiRoute
   '/env': typeof EnvRoute
   '/flows': typeof FlowsRoute
+  '/inbox': typeof InboxRoute
+  '/integrations': typeof IntegrationsRoute
   '/login': typeof LoginRoute
   '/messages': typeof MessagesRoute
+  '/payments': typeof PaymentsRoute
   '/playground': typeof PlaygroundRoute
   '/projects': typeof ProjectsRoute
   '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
   '/templates': typeof TemplatesRoute
+  '/voice': typeof VoiceRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/api-keys': typeof ApiKeysRoute
+  '/campaigns': typeof CampaignsRoute
   '/dashboard': typeof DashboardRoute
+  '/dev-api': typeof DevApiRoute
   '/env': typeof EnvRoute
   '/flows': typeof FlowsRoute
+  '/inbox': typeof InboxRoute
+  '/integrations': typeof IntegrationsRoute
   '/login': typeof LoginRoute
   '/messages': typeof MessagesRoute
+  '/payments': typeof PaymentsRoute
   '/playground': typeof PlaygroundRoute
   '/projects': typeof ProjectsRoute
   '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
   '/templates': typeof TemplatesRoute
+  '/voice': typeof VoiceRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/api-keys'
+    | '/campaigns'
     | '/dashboard'
+    | '/dev-api'
     | '/env'
     | '/flows'
+    | '/inbox'
+    | '/integrations'
     | '/login'
     | '/messages'
+    | '/payments'
     | '/playground'
     | '/projects'
     | '/settings'
     | '/signup'
     | '/templates'
+    | '/voice'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/api-keys'
+    | '/campaigns'
     | '/dashboard'
+    | '/dev-api'
     | '/env'
     | '/flows'
+    | '/inbox'
+    | '/integrations'
     | '/login'
     | '/messages'
+    | '/payments'
     | '/playground'
     | '/projects'
     | '/settings'
     | '/signup'
     | '/templates'
+    | '/voice'
   id:
     | '__root__'
     | '/'
     | '/api-keys'
+    | '/campaigns'
     | '/dashboard'
+    | '/dev-api'
     | '/env'
     | '/flows'
+    | '/inbox'
+    | '/integrations'
     | '/login'
     | '/messages'
+    | '/payments'
     | '/playground'
     | '/projects'
     | '/settings'
     | '/signup'
     | '/templates'
+    | '/voice'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ApiKeysRoute: typeof ApiKeysRoute
+  CampaignsRoute: typeof CampaignsRoute
   DashboardRoute: typeof DashboardRoute
+  DevApiRoute: typeof DevApiRoute
   EnvRoute: typeof EnvRoute
   FlowsRoute: typeof FlowsRoute
+  InboxRoute: typeof InboxRoute
+  IntegrationsRoute: typeof IntegrationsRoute
   LoginRoute: typeof LoginRoute
   MessagesRoute: typeof MessagesRoute
+  PaymentsRoute: typeof PaymentsRoute
   PlaygroundRoute: typeof PlaygroundRoute
   ProjectsRoute: typeof ProjectsRoute
   SettingsRoute: typeof SettingsRoute
   SignupRoute: typeof SignupRoute
   TemplatesRoute: typeof TemplatesRoute
+  VoiceRoute: typeof VoiceRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/voice': {
+      id: '/voice'
+      path: '/voice'
+      fullPath: '/voice'
+      preLoaderRoute: typeof VoiceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/templates': {
       id: '/templates'
       path: '/templates'
@@ -223,6 +308,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlaygroundRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/payments': {
+      id: '/payments'
+      path: '/payments'
+      fullPath: '/payments'
+      preLoaderRoute: typeof PaymentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/messages': {
       id: '/messages'
       path: '/messages'
@@ -235,6 +327,20 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/integrations': {
+      id: '/integrations'
+      path: '/integrations'
+      fullPath: '/integrations'
+      preLoaderRoute: typeof IntegrationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/inbox': {
+      id: '/inbox'
+      path: '/inbox'
+      fullPath: '/inbox'
+      preLoaderRoute: typeof InboxRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/flows': {
@@ -251,11 +357,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EnvRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dev-api': {
+      id: '/dev-api'
+      path: '/dev-api'
+      fullPath: '/dev-api'
+      preLoaderRoute: typeof DevApiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dashboard': {
       id: '/dashboard'
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/campaigns': {
+      id: '/campaigns'
+      path: '/campaigns'
+      fullPath: '/campaigns'
+      preLoaderRoute: typeof CampaignsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api-keys': {
@@ -278,16 +398,22 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ApiKeysRoute: ApiKeysRoute,
+  CampaignsRoute: CampaignsRoute,
   DashboardRoute: DashboardRoute,
+  DevApiRoute: DevApiRoute,
   EnvRoute: EnvRoute,
   FlowsRoute: FlowsRoute,
+  InboxRoute: InboxRoute,
+  IntegrationsRoute: IntegrationsRoute,
   LoginRoute: LoginRoute,
   MessagesRoute: MessagesRoute,
+  PaymentsRoute: PaymentsRoute,
   PlaygroundRoute: PlaygroundRoute,
   ProjectsRoute: ProjectsRoute,
   SettingsRoute: SettingsRoute,
   SignupRoute: SignupRoute,
   TemplatesRoute: TemplatesRoute,
+  VoiceRoute: VoiceRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
