@@ -194,27 +194,36 @@ function FlowsPage() {
     return g;
   }, []);
 
-  // Simulation: highlight nodes & edges along an active path sequentially
+  // Simulation: highlight nodes & edges + emit live test logs
   const simulate = () => {
     setSimulating(true);
+    setShowLogs(true);
+    setLogs([]);
     const path = ["1", "2", "3", "5", "6"];
     const edgePath = ["e1-2", "e2-3", "e3-5", "e5-6"];
+    const messages: Array<{ msg: string; kind: "info" | "ok" | "warn" }> = [
+      { msg: "Trigger received: POST /v1/events/order_placed", kind: "info" },
+      { msg: "WhatsApp 'order_shipped' sent → delivered (412ms)", kind: "ok" },
+      { msg: "Behavior branch: waiting for inbound reply (60m)", kind: "info" },
+      { msg: "No reply within window → fallback path", kind: "warn" },
+      { msg: "Reminder email queued via Resend", kind: "ok" },
+    ];
     let i = 0;
-
     const tick = () => {
       const activeNodes = path.slice(0, i + 1);
       const activeEdges = edgePath.slice(0, i);
-      setNodes((ns) =>
-        ns.map((n) => ({ ...n, data: { ...n.data, active: activeNodes.includes(n.id) } })),
-      );
-      setEdges((es) =>
-        es.map((e) => ({ ...e, animated: activeEdges.includes(e.id) })),
-      );
+      setNodes((ns) => ns.map((n) => ({ ...n, data: { ...n.data, active: activeNodes.includes(n.id) } })));
+      setEdges((es) => es.map((e) => ({ ...e, animated: activeEdges.includes(e.id) })));
+      if (i < messages.length) {
+        const m = messages[i];
+        setLogs((l) => [...l, { t: new Date().toLocaleTimeString(), ...m }]);
+      }
       i++;
       if (i <= path.length) {
-        setTimeout(tick, 600);
+        setTimeout(tick, 700);
       } else {
         setTimeout(() => {
+          setLogs((l) => [...l, { t: new Date().toLocaleTimeString(), msg: "Run complete · 5 steps · 0 errors", kind: "ok" }]);
           setNodes((ns) => ns.map((n) => ({ ...n, data: { ...n.data, active: false } })));
           setEdges((es) => es.map((e) => ({ ...e, animated: false })));
           setSimulating(false);
