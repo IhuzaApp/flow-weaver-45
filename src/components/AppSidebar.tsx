@@ -12,6 +12,12 @@ import {
   Lock,
   ChevronsUpDown,
   Check,
+  Inbox,
+  Plug,
+  Megaphone,
+  CreditCard,
+  PhoneCall,
+  Code2,
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -21,10 +27,16 @@ const nav: Array<{ to: string; label: string; icon: typeof LayoutDashboard; exac
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { to: "/projects", label: "Projects", icon: FolderKanban },
   { to: "/flows", label: "Flows", icon: Workflow, section: "Build" },
-  { to: "/playground", label: "API Playground", icon: TerminalSquare },
+  { to: "/campaigns", label: "Campaigns", icon: Megaphone },
   { to: "/templates", label: "Templates", icon: FileText },
-  { to: "/messages", label: "Messages", icon: MessageSquare, section: "Monitor" },
-  { to: "/api-keys", label: "API Keys", icon: KeyRound, section: "Configure" },
+  { to: "/playground", label: "API Playground", icon: TerminalSquare },
+  { to: "/inbox", label: "Support Inbox", icon: Inbox, section: "Engage" },
+  { to: "/voice", label: "Voice Support", icon: PhoneCall },
+  { to: "/messages", label: "Messages", icon: MessageSquare },
+  { to: "/payments", label: "Payments", icon: CreditCard },
+  { to: "/integrations", label: "Integrations", icon: Plug, section: "Configure" },
+  { to: "/api-keys", label: "API Keys", icon: KeyRound },
+  { to: "/dev-api", label: "Developer API", icon: Code2 },
   { to: "/env", label: "Env Variables", icon: Lock },
   { to: "/settings", label: "Settings", icon: Settings },
 ];
@@ -121,15 +133,15 @@ export function AppSidebar() {
       </nav>
 
       <div className="m-3 rounded-xl border border-sidebar-border bg-card p-4 shadow-soft">
-        <div className="text-xs font-medium text-foreground">Free trial</div>
-        <div className="mt-1 text-xs text-muted-foreground">
-          12,480 of 50,000 messages used
+        <div className="flex items-center gap-1.5">
+          <span className="h-1.5 w-1.5 rounded-full bg-channel-ai animate-pulse" />
+          <div className="text-xs font-medium text-foreground">Sandbox active</div>
         </div>
-        <div className="mt-3 h-1.5 w-full rounded-full bg-muted overflow-hidden">
-          <div className="h-full w-1/4 rounded-full bg-gradient-primary" />
+        <div className="mt-1 text-xs text-muted-foreground">
+          Test key — no real messages or charges
         </div>
         <button className="mt-3 w-full rounded-md bg-foreground px-3 py-1.5 text-xs font-medium text-background hover:opacity-90 transition">
-          Upgrade plan
+          Switch to live
         </button>
       </div>
     </aside>

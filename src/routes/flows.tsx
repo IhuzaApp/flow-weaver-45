@@ -284,7 +284,10 @@ function FlowsPage() {
                         p.kind === "sms" && "bg-channel-sms/10 text-channel-sms",
                         p.kind === "email" && "bg-channel-email/10 text-channel-email",
                         p.kind === "whatsapp" && "bg-channel-whatsapp/10 text-channel-whatsapp",
+                        p.kind === "instagram" && "bg-channel-ai/10 text-channel-ai",
                         p.kind === "ai" && "bg-channel-ai/10 text-channel-ai",
+                        p.kind === "agent" && "bg-channel-ai/15 text-channel-ai",
+                        p.kind === "payment" && "bg-success/15 text-success",
                         p.kind === "delay" && "bg-warning/15 text-warning-foreground",
                         p.kind === "condition" && "bg-info/10 text-info",
                       )}>
