@@ -161,6 +161,8 @@ function FlowsPage() {
   const [selectedId, setSelectedId] = useState<string | null>("2");
   const [active, setActive] = useState(true);
   const [simulating, setSimulating] = useState(false);
+  const [logs, setLogs] = useState<Array<{ t: string; msg: string; kind: "info" | "ok" | "warn" }>>([]);
+  const [showLogs, setShowLogs] = useState(false);
 
   const onConnect = useCallback(
     (params: Edge | Connection) =>
