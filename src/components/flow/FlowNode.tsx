@@ -11,11 +11,14 @@ import {
   Settings2,
   ArrowDownRight,
   RotateCw,
+  Bot,
+  CreditCard,
+  Instagram,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-export type ChannelKind = "sms" | "email" | "whatsapp" | "ai";
-export type FlowNodeKind = "trigger" | ChannelKind | "delay" | "condition";
+export type ChannelKind = "sms" | "email" | "whatsapp" | "ai" | "instagram";
+export type FlowNodeKind = "trigger" | ChannelKind | "delay" | "condition" | "agent" | "payment";
 
 export type FlowNodeData = {
   kind: FlowNodeKind;
@@ -37,7 +40,10 @@ const config: Record<
   sms: { icon: Phone, accent: "bg-channel-sms/10 text-channel-sms", ring: "ring-channel-sms/40", tag: "Action", label: "SMS" },
   email: { icon: Mail, accent: "bg-channel-email/10 text-channel-email", ring: "ring-channel-email/40", tag: "Action", label: "Email" },
   whatsapp: { icon: MessageSquare, accent: "bg-channel-whatsapp/10 text-channel-whatsapp", ring: "ring-channel-whatsapp/40", tag: "Action", label: "WhatsApp" },
+  instagram: { icon: Instagram, accent: "bg-channel-ai/10 text-channel-ai", ring: "ring-channel-ai/40", tag: "Action", label: "Instagram" },
   ai: { icon: Sparkles, accent: "bg-channel-ai/10 text-channel-ai", ring: "ring-channel-ai/40", tag: "Action", label: "AI" },
+  agent: { icon: Bot, accent: "bg-channel-ai/15 text-channel-ai", ring: "ring-channel-ai/50", tag: "AI Agent", label: "AI Agent" },
+  payment: { icon: CreditCard, accent: "bg-success/15 text-success", ring: "ring-success/40", tag: "Action", label: "Payment" },
   delay: { icon: Clock, accent: "bg-warning/15 text-warning-foreground", ring: "ring-warning/40", tag: "Logic", label: "Delay" },
   condition: { icon: GitBranch, accent: "bg-info/10 text-info", ring: "ring-info/40", tag: "Logic", label: "Condition" },
 };
