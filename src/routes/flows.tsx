@@ -137,9 +137,12 @@ const initialEdges: Edge[] = [
 const palette: Array<{ kind: FlowNodeData["kind"]; label: string; icon: typeof Webhook; group: string }> = [
   { kind: "trigger", label: "API trigger", icon: Webhook, group: "Triggers" },
   { kind: "whatsapp", label: "Send WhatsApp", icon: MessageSquare, group: "Channels" },
+  { kind: "instagram", label: "Send Instagram", icon: Instagram, group: "Channels" },
   { kind: "sms", label: "Send SMS", icon: Phone, group: "Channels" },
   { kind: "email", label: "Send Email", icon: Mail, group: "Channels" },
-  { kind: "ai", label: "AI response", icon: Sparkles, group: "Channels" },
+  { kind: "agent", label: "AI Agent", icon: Bot, group: "AI" },
+  { kind: "ai", label: "AI response", icon: Sparkles, group: "AI" },
+  { kind: "payment", label: "Request payment", icon: CreditCard, group: "Actions" },
   { kind: "delay", label: "Delay", icon: Clock, group: "Logic" },
   { kind: "condition", label: "Behavior branch", icon: GitBranch, group: "Logic" },
 ];
@@ -148,6 +151,7 @@ const channelKindAccent: Record<ChannelKind, string> = {
   sms: "bg-channel-sms/10 text-channel-sms",
   email: "bg-channel-email/10 text-channel-email",
   whatsapp: "bg-channel-whatsapp/10 text-channel-whatsapp",
+  instagram: "bg-channel-ai/10 text-channel-ai",
   ai: "bg-channel-ai/10 text-channel-ai",
 };
 
