@@ -26,6 +26,11 @@ import {
   Power,
   Plus,
   Info,
+  Bot,
+  CreditCard,
+  Instagram,
+  Square,
+  TerminalSquare,
 } from "lucide-react";
 import { AppLayout } from "@/components/AppLayout";
 import { Topbar } from "@/components/Topbar";
