@@ -73,17 +73,7 @@ function AdminPage() {
 
   return (
     <AppLayout>
-      <Topbar
-        title={
-          <span className="flex items-center gap-2">
-            <span className="flex h-6 w-6 items-center justify-center rounded bg-destructive/10 text-destructive">
-              <Shield className="h-3.5 w-3.5" />
-            </span>
-            Admin Console
-          </span>
-        }
-        subtitle="Platform-wide controls · restricted access"
-      />
+      <Topbar title="Admin Console" subtitle="Platform-wide controls · restricted access" />
       <main className="flex-1 overflow-auto">
         <div className="px-6 py-6 max-w-[1400px]">
           {/* Warning banner */}
@@ -135,30 +125,10 @@ function OverviewTab() {
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <StatCard
-          label="Total users"
-          value={platformStats.totalUsers.toLocaleString()}
-          icon={Users}
-          trend={{ value: "+128 this week", positive: true }}
-        />
-        <StatCard
-          label="Active users (30d)"
-          value={platformStats.activeUsers.toLocaleString()}
-          icon={Activity}
-          trend={{ value: "69% of total", positive: true }}
-        />
-        <StatCard
-          label="Platform MRR"
-          value={`$${(platformStats.mrr / 1000).toFixed(1)}k`}
-          icon={DollarSign}
-          trend={{ value: "+10.9% MoM", positive: true }}
-        />
-        <StatCard
-          label="Error rate (24h)"
-          value={`${platformStats.errorRate}%`}
-          icon={AlertTriangle}
-          trend={{ value: "Within SLA", positive: true }}
-        />
+        <StatCard label="Total users" value={platformStats.totalUsers.toLocaleString()} icon={Users} delta={3.1} />
+        <StatCard label="Active users (30d)" value={platformStats.activeUsers.toLocaleString()} icon={Activity} delta={2.4} />
+        <StatCard label="Platform MRR" value={`$${(platformStats.mrr / 1000).toFixed(1)}k`} icon={DollarSign} delta={10.9} />
+        <StatCard label="Error rate (24h)" value={`${platformStats.errorRate}%`} icon={AlertTriangle} delta={-0.2} />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
