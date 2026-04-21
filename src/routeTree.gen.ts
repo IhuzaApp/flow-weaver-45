@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as VoiceRouteImport } from './routes/voice'
+import { Route as TicketsRouteImport } from './routes/tickets'
 import { Route as TemplatesRouteImport } from './routes/templates'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as SettingsRouteImport } from './routes/settings'
@@ -19,18 +20,24 @@ import { Route as PaymentsRouteImport } from './routes/payments'
 import { Route as MessagesRouteImport } from './routes/messages'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as IntegrationsRouteImport } from './routes/integrations'
-import { Route as InboxRouteImport } from './routes/inbox'
 import { Route as FlowsRouteImport } from './routes/flows'
 import { Route as EnvRouteImport } from './routes/env'
+import { Route as DomainsRouteImport } from './routes/domains'
 import { Route as DevApiRouteImport } from './routes/dev-api'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as CampaignsRouteImport } from './routes/campaigns'
+import { Route as AutomationsRouteImport } from './routes/automations'
 import { Route as ApiKeysRouteImport } from './routes/api-keys'
 import { Route as IndexRouteImport } from './routes/index'
 
 const VoiceRoute = VoiceRouteImport.update({
   id: '/voice',
   path: '/voice',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TicketsRoute = TicketsRouteImport.update({
+  id: '/tickets',
+  path: '/tickets',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TemplatesRoute = TemplatesRouteImport.update({
@@ -78,11 +85,6 @@ const IntegrationsRoute = IntegrationsRouteImport.update({
   path: '/integrations',
   getParentRoute: () => rootRouteImport,
 } as any)
-const InboxRoute = InboxRouteImport.update({
-  id: '/inbox',
-  path: '/inbox',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const FlowsRoute = FlowsRouteImport.update({
   id: '/flows',
   path: '/flows',
@@ -91,6 +93,11 @@ const FlowsRoute = FlowsRouteImport.update({
 const EnvRoute = EnvRouteImport.update({
   id: '/env',
   path: '/env',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DomainsRoute = DomainsRouteImport.update({
+  id: '/domains',
+  path: '/domains',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DevApiRoute = DevApiRouteImport.update({
@@ -108,6 +115,11 @@ const CampaignsRoute = CampaignsRouteImport.update({
   path: '/campaigns',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AutomationsRoute = AutomationsRouteImport.update({
+  id: '/automations',
+  path: '/automations',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiKeysRoute = ApiKeysRouteImport.update({
   id: '/api-keys',
   path: '/api-keys',
@@ -122,12 +134,13 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/api-keys': typeof ApiKeysRoute
+  '/automations': typeof AutomationsRoute
   '/campaigns': typeof CampaignsRoute
   '/dashboard': typeof DashboardRoute
   '/dev-api': typeof DevApiRoute
+  '/domains': typeof DomainsRoute
   '/env': typeof EnvRoute
   '/flows': typeof FlowsRoute
-  '/inbox': typeof InboxRoute
   '/integrations': typeof IntegrationsRoute
   '/login': typeof LoginRoute
   '/messages': typeof MessagesRoute
@@ -137,17 +150,19 @@ export interface FileRoutesByFullPath {
   '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
   '/templates': typeof TemplatesRoute
+  '/tickets': typeof TicketsRoute
   '/voice': typeof VoiceRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/api-keys': typeof ApiKeysRoute
+  '/automations': typeof AutomationsRoute
   '/campaigns': typeof CampaignsRoute
   '/dashboard': typeof DashboardRoute
   '/dev-api': typeof DevApiRoute
+  '/domains': typeof DomainsRoute
   '/env': typeof EnvRoute
   '/flows': typeof FlowsRoute
-  '/inbox': typeof InboxRoute
   '/integrations': typeof IntegrationsRoute
   '/login': typeof LoginRoute
   '/messages': typeof MessagesRoute
@@ -157,18 +172,20 @@ export interface FileRoutesByTo {
   '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
   '/templates': typeof TemplatesRoute
+  '/tickets': typeof TicketsRoute
   '/voice': typeof VoiceRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/api-keys': typeof ApiKeysRoute
+  '/automations': typeof AutomationsRoute
   '/campaigns': typeof CampaignsRoute
   '/dashboard': typeof DashboardRoute
   '/dev-api': typeof DevApiRoute
+  '/domains': typeof DomainsRoute
   '/env': typeof EnvRoute
   '/flows': typeof FlowsRoute
-  '/inbox': typeof InboxRoute
   '/integrations': typeof IntegrationsRoute
   '/login': typeof LoginRoute
   '/messages': typeof MessagesRoute
@@ -178,6 +195,7 @@ export interface FileRoutesById {
   '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
   '/templates': typeof TemplatesRoute
+  '/tickets': typeof TicketsRoute
   '/voice': typeof VoiceRoute
 }
 export interface FileRouteTypes {
@@ -185,12 +203,13 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/api-keys'
+    | '/automations'
     | '/campaigns'
     | '/dashboard'
     | '/dev-api'
+    | '/domains'
     | '/env'
     | '/flows'
-    | '/inbox'
     | '/integrations'
     | '/login'
     | '/messages'
@@ -200,17 +219,19 @@ export interface FileRouteTypes {
     | '/settings'
     | '/signup'
     | '/templates'
+    | '/tickets'
     | '/voice'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/api-keys'
+    | '/automations'
     | '/campaigns'
     | '/dashboard'
     | '/dev-api'
+    | '/domains'
     | '/env'
     | '/flows'
-    | '/inbox'
     | '/integrations'
     | '/login'
     | '/messages'
@@ -220,17 +241,19 @@ export interface FileRouteTypes {
     | '/settings'
     | '/signup'
     | '/templates'
+    | '/tickets'
     | '/voice'
   id:
     | '__root__'
     | '/'
     | '/api-keys'
+    | '/automations'
     | '/campaigns'
     | '/dashboard'
     | '/dev-api'
+    | '/domains'
     | '/env'
     | '/flows'
-    | '/inbox'
     | '/integrations'
     | '/login'
     | '/messages'
@@ -240,18 +263,20 @@ export interface FileRouteTypes {
     | '/settings'
     | '/signup'
     | '/templates'
+    | '/tickets'
     | '/voice'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ApiKeysRoute: typeof ApiKeysRoute
+  AutomationsRoute: typeof AutomationsRoute
   CampaignsRoute: typeof CampaignsRoute
   DashboardRoute: typeof DashboardRoute
   DevApiRoute: typeof DevApiRoute
+  DomainsRoute: typeof DomainsRoute
   EnvRoute: typeof EnvRoute
   FlowsRoute: typeof FlowsRoute
-  InboxRoute: typeof InboxRoute
   IntegrationsRoute: typeof IntegrationsRoute
   LoginRoute: typeof LoginRoute
   MessagesRoute: typeof MessagesRoute
@@ -261,6 +286,7 @@ export interface RootRouteChildren {
   SettingsRoute: typeof SettingsRoute
   SignupRoute: typeof SignupRoute
   TemplatesRoute: typeof TemplatesRoute
+  TicketsRoute: typeof TicketsRoute
   VoiceRoute: typeof VoiceRoute
 }
 
@@ -271,6 +297,13 @@ declare module '@tanstack/react-router' {
       path: '/voice'
       fullPath: '/voice'
       preLoaderRoute: typeof VoiceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tickets': {
+      id: '/tickets'
+      path: '/tickets'
+      fullPath: '/tickets'
+      preLoaderRoute: typeof TicketsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/templates': {
@@ -336,13 +369,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IntegrationsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/inbox': {
-      id: '/inbox'
-      path: '/inbox'
-      fullPath: '/inbox'
-      preLoaderRoute: typeof InboxRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/flows': {
       id: '/flows'
       path: '/flows'
@@ -355,6 +381,13 @@ declare module '@tanstack/react-router' {
       path: '/env'
       fullPath: '/env'
       preLoaderRoute: typeof EnvRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/domains': {
+      id: '/domains'
+      path: '/domains'
+      fullPath: '/domains'
+      preLoaderRoute: typeof DomainsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dev-api': {
@@ -378,6 +411,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CampaignsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/automations': {
+      id: '/automations'
+      path: '/automations'
+      fullPath: '/automations'
+      preLoaderRoute: typeof AutomationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api-keys': {
       id: '/api-keys'
       path: '/api-keys'
@@ -398,12 +438,13 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ApiKeysRoute: ApiKeysRoute,
+  AutomationsRoute: AutomationsRoute,
   CampaignsRoute: CampaignsRoute,
   DashboardRoute: DashboardRoute,
   DevApiRoute: DevApiRoute,
+  DomainsRoute: DomainsRoute,
   EnvRoute: EnvRoute,
   FlowsRoute: FlowsRoute,
-  InboxRoute: InboxRoute,
   IntegrationsRoute: IntegrationsRoute,
   LoginRoute: LoginRoute,
   MessagesRoute: MessagesRoute,
@@ -413,8 +454,18 @@ const rootRouteChildren: RootRouteChildren = {
   SettingsRoute: SettingsRoute,
   SignupRoute: SignupRoute,
   TemplatesRoute: TemplatesRoute,
+  TicketsRoute: TicketsRoute,
   VoiceRoute: VoiceRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}
