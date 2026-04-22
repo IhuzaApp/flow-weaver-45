@@ -243,23 +243,28 @@ function UsersTab({
   users: typeof adminUsers;
 }) {
   const planColor: Record<string, string> = {
-    free: "bg-muted text-muted-foreground",
-    starter: "bg-primary/10 text-primary",
-    growth: "bg-channel-whatsapp/10 text-channel-whatsapp",
-    enterprise: "bg-channel-ai/10 text-channel-ai",
+    free: "bg-muted text-muted-foreground border-border",
+    starter: "bg-primary/10 text-primary border-primary/20",
+    growth: "bg-channel-whatsapp/10 text-channel-whatsapp border-channel-whatsapp/20",
+    enterprise: "bg-channel-ai/10 text-channel-ai border-channel-ai/20",
   };
-  const statusColor: Record<string, string> = {
-    active: "bg-channel-ai/10 text-channel-ai",
-    suspended: "bg-destructive/10 text-destructive",
-    invited: "bg-channel-sms/10 text-channel-sms",
+  const statusDot: Record<string, string> = {
+    active: "bg-success",
+    suspended: "bg-destructive",
+    invited: "bg-warning",
+  };
+  const statusText: Record<string, string> = {
+    active: "text-success",
+    suspended: "text-destructive",
+    invited: "text-warning",
   };
 
   return (
-    <Card>
-      <div className="flex items-center justify-between mb-4 gap-3 flex-wrap">
+    <Card className="overflow-hidden">
+      <div className="flex items-center justify-between gap-3 flex-wrap p-5 border-b border-border">
         <div>
           <h3 className="text-sm font-semibold text-foreground">All users</h3>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-xs text-muted-foreground mt-0.5">
             {users.length} user{users.length === 1 ? "" : "s"} across all organizations
           </p>
         </div>
@@ -270,33 +275,33 @@ function UsersTab({
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search users…"
-              className="pl-8 pr-3 py-1.5 text-xs rounded-md border border-border bg-background w-56 focus:outline-none focus:ring-2 focus:ring-ring"
+              className="pl-8 pr-3 py-1.5 text-xs rounded-md border border-input bg-background w-56 focus:outline-none focus:ring-2 focus:ring-ring transition"
             />
           </div>
-          <button className="rounded-md bg-foreground text-background px-3 py-1.5 text-xs font-medium hover:opacity-90">
+          <button className="rounded-md bg-foreground text-background px-3 py-1.5 text-xs font-medium hover:opacity-90 shadow-soft transition">
             Invite admin
           </button>
         </div>
       </div>
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
-          <thead>
-            <tr className="border-b border-border text-xs text-muted-foreground">
-              <th className="text-left font-medium py-2 px-2">User</th>
-              <th className="text-left font-medium py-2 px-2">Role</th>
-              <th className="text-left font-medium py-2 px-2">Plan</th>
-              <th className="text-left font-medium py-2 px-2">Status</th>
-              <th className="text-left font-medium py-2 px-2">MRR</th>
-              <th className="text-left font-medium py-2 px-2">Last active</th>
-              <th className="w-8"></th>
+          <thead className="bg-muted/40">
+            <tr className="text-[11px] uppercase tracking-wider text-muted-foreground">
+              <th className="text-left font-semibold py-2.5 px-5">User</th>
+              <th className="text-left font-semibold py-2.5 px-3">Role</th>
+              <th className="text-left font-semibold py-2.5 px-3">Plan</th>
+              <th className="text-left font-semibold py-2.5 px-3">Status</th>
+              <th className="text-right font-semibold py-2.5 px-3">MRR</th>
+              <th className="text-left font-semibold py-2.5 px-3">Last active</th>
+              <th className="w-12"></th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="divide-y divide-border">
             {users.map((u) => (
-              <tr key={u.id} className="border-b border-border last:border-0 hover:bg-accent/30">
-                <td className="py-2.5 px-2">
+              <tr key={u.id} className="hover:bg-accent/30 transition-colors">
+                <td className="py-3 px-5">
                   <div className="flex items-center gap-2.5">
-                    <div className="h-7 w-7 rounded-full bg-gradient-primary flex items-center justify-center text-primary-foreground text-[10px] font-semibold">
+                    <div className="h-8 w-8 rounded-full bg-gradient-primary flex items-center justify-center text-primary-foreground text-[10px] font-semibold shadow-soft">
                       {u.name.split(" ").map((n) => n[0]).join("").slice(0, 2)}
                     </div>
                     <div className="min-w-0">
@@ -305,21 +310,22 @@ function UsersTab({
                     </div>
                   </div>
                 </td>
-                <td className="py-2.5 px-2 text-xs text-foreground capitalize">{u.role}</td>
-                <td className="py-2.5 px-2">
-                  <span className={cn("inline-flex rounded px-1.5 py-0.5 text-[10px] font-medium capitalize", planColor[u.plan])}>
+                <td className="py-3 px-3 text-xs text-foreground capitalize">{u.role}</td>
+                <td className="py-3 px-3">
+                  <span className={cn("inline-flex rounded-md border px-2 py-0.5 text-[10px] font-medium capitalize", planColor[u.plan])}>
                     {u.plan}
                   </span>
                 </td>
-                <td className="py-2.5 px-2">
-                  <span className={cn("inline-flex rounded px-1.5 py-0.5 text-[10px] font-medium capitalize", statusColor[u.status])}>
+                <td className="py-3 px-3">
+                  <span className={cn("inline-flex items-center gap-1.5 text-[11px] font-medium capitalize", statusText[u.status])}>
+                    <span className={cn("h-1.5 w-1.5 rounded-full", statusDot[u.status])} />
                     {u.status}
                   </span>
                 </td>
-                <td className="py-2.5 px-2 text-xs tabular-nums text-foreground">${u.mrr}</td>
-                <td className="py-2.5 px-2 text-xs text-muted-foreground">{u.lastActive}</td>
-                <td className="py-2.5 px-2">
-                  <button className="text-muted-foreground hover:text-foreground">
+                <td className="py-3 px-3 text-xs tabular-nums text-foreground text-right font-medium">${u.mrr.toLocaleString()}</td>
+                <td className="py-3 px-3 text-xs text-muted-foreground whitespace-nowrap">{u.lastActive}</td>
+                <td className="py-3 px-3">
+                  <button className="text-muted-foreground hover:text-foreground rounded p-1 hover:bg-muted transition">
                     <MoreHorizontal className="h-4 w-4" />
                   </button>
                 </td>
@@ -336,31 +342,39 @@ function SystemTab() {
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {systemServices.map((s) => (
-          <Card key={s.id}>
-            <div className="flex items-start justify-between">
-              <div>
-                <div className="flex items-center gap-2">
-                  <ServicePill service={s} />
+        {systemServices.map((s) => {
+          const dot =
+            s.status === "operational" ? "bg-success" : s.status === "degraded" ? "bg-warning" : "bg-destructive";
+          const tone =
+            s.status === "operational" ? "text-success" : s.status === "degraded" ? "text-warning" : "text-destructive";
+          return (
+            <Card key={s.id} className="p-5 hover:shadow-elevated transition-shadow">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <span className={cn("h-2.5 w-2.5 rounded-full shrink-0", dot, s.status !== "down" && "animate-pulse")} />
+                  <div className="font-semibold text-foreground text-sm truncate">{s.name}</div>
+                </div>
+                <span className={cn("text-[11px] font-medium capitalize px-2 py-0.5 rounded-md border", tone, "border-current/20 bg-current/5")}>
+                  {s.status}
+                </span>
+              </div>
+              <div className="mt-4 grid grid-cols-3 gap-2 pt-4 border-t border-border">
+                <div>
+                  <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Uptime 30d</div>
+                  <div className="text-base font-semibold text-foreground tabular-nums mt-0.5">{s.uptime}%</div>
+                </div>
+                <div>
+                  <div className="text-[10px] uppercase tracking-wider text-muted-foreground">p95 Latency</div>
+                  <div className="text-base font-semibold text-foreground tabular-nums mt-0.5">{s.latency}ms</div>
+                </div>
+                <div>
+                  <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Region</div>
+                  <div className="text-base font-semibold text-foreground mt-0.5">global</div>
                 </div>
               </div>
-            </div>
-            <div className="mt-3 grid grid-cols-3 gap-3 text-center">
-              <div>
-                <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Uptime 30d</div>
-                <div className="text-sm font-semibold text-foreground">{s.uptime}%</div>
-              </div>
-              <div>
-                <div className="text-[10px] uppercase tracking-wider text-muted-foreground">p95 Latency</div>
-                <div className="text-sm font-semibold text-foreground">{s.latency}ms</div>
-              </div>
-              <div>
-                <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Status</div>
-                <div className="text-sm font-semibold text-foreground capitalize">{s.status}</div>
-              </div>
-            </div>
-          </Card>
-        ))}
+            </Card>
+          );
+        })}
       </div>
     </div>
   );
