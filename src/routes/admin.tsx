@@ -382,7 +382,7 @@ function SystemTab() {
 
 function BillingTab() {
   const plans = [
-    { name: "Free", users: 1820, mrr: 0, color: "bg-muted" },
+    { name: "Free", users: 1820, mrr: 0, color: "bg-muted-foreground/40" },
     { name: "Starter", users: 1490, mrr: 14_750, color: "bg-primary" },
     { name: "Growth", users: 782, mrr: 78_200, color: "bg-channel-whatsapp" },
     { name: "Enterprise", users: 126, mrr: 91_280, color: "bg-channel-ai" },
@@ -392,26 +392,37 @@ function BillingTab() {
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <StatCard label="MRR" value={`$${(total / 1000).toFixed(1)}k`} icon={DollarSign} />
-        <StatCard label="ARR (est.)" value={`$${((total * 12) / 1_000_000).toFixed(2)}M`} icon={TrendingUp} />
-        <StatCard label="Paying accounts" value={(plans[1].users + plans[2].users + plans[3].users).toLocaleString()} icon={Users} />
-        <StatCard label="Churn (30d)" value="2.1%" icon={AlertTriangle} />
+        <StatCard label="MRR" value={`$${(total / 1000).toFixed(1)}k`} icon={DollarSign} delta={10.9} />
+        <StatCard label="ARR (est.)" value={`$${((total * 12) / 1_000_000).toFixed(2)}M`} icon={TrendingUp} delta={12.3} />
+        <StatCard label="Paying accounts" value={(plans[1].users + plans[2].users + plans[3].users).toLocaleString()} icon={Users} delta={4.2} />
+        <StatCard label="Churn (30d)" value="2.1%" icon={AlertTriangle} delta={-0.4} />
       </div>
-      <Card>
-        <h3 className="text-sm font-semibold text-foreground mb-4">Revenue by plan</h3>
-        <div className="space-y-3">
+      <Card className="p-5">
+        <div className="flex items-center justify-between mb-5">
+          <div>
+            <h3 className="text-sm font-semibold text-foreground">Revenue by plan</h3>
+            <p className="text-xs text-muted-foreground mt-0.5">Distribution across {plans.length} tiers</p>
+          </div>
+          <div className="text-xs text-muted-foreground">Total <span className="font-semibold text-foreground tabular-nums">${total.toLocaleString()}</span>/mo</div>
+        </div>
+        <div className="space-y-4">
           {plans.map((p) => {
             const pct = total === 0 ? 0 : (p.mrr / total) * 100;
             return (
               <div key={p.name}>
-                <div className="flex items-center justify-between text-xs mb-1">
-                  <span className="font-medium text-foreground">{p.name}</span>
-                  <span className="text-muted-foreground tabular-nums">
-                    {p.users.toLocaleString()} users · ${p.mrr.toLocaleString()}/mo
+                <div className="flex items-center justify-between text-xs mb-1.5">
+                  <span className="flex items-center gap-2 font-medium text-foreground">
+                    <span className={cn("h-2 w-2 rounded-full", p.color)} />
+                    {p.name}
+                    <span className="text-muted-foreground font-normal">· {p.users.toLocaleString()} users</span>
+                  </span>
+                  <span className="text-foreground font-semibold tabular-nums">
+                    ${p.mrr.toLocaleString()}
+                    <span className="text-muted-foreground font-normal"> · {pct.toFixed(0)}%</span>
                   </span>
                 </div>
-                <div className="h-2 rounded bg-muted overflow-hidden">
-                  <div className={cn("h-full rounded", p.color)} style={{ width: `${pct}%` }} />
+                <div className="h-2 rounded-full bg-muted overflow-hidden">
+                  <div className={cn("h-full rounded-full transition-all", p.color)} style={{ width: `${pct}%` }} />
                 </div>
               </div>
             );
@@ -430,29 +441,34 @@ function FlagsTab({
   setFlags: (f: typeof initialFlags) => void;
 }) {
   return (
-    <Card>
-      <div className="flex items-center justify-between mb-4">
+    <Card className="overflow-hidden">
+      <div className="flex items-center justify-between p-5 border-b border-border">
         <div>
           <h3 className="text-sm font-semibold text-foreground">Feature flags</h3>
-          <p className="text-xs text-muted-foreground">Gradually roll out features to a percentage of users</p>
+          <p className="text-xs text-muted-foreground mt-0.5">Gradually roll out features to a percentage of users</p>
         </div>
-        <button className="rounded-md bg-foreground text-background px-3 py-1.5 text-xs font-medium hover:opacity-90">
+        <button className="rounded-md bg-foreground text-background px-3 py-1.5 text-xs font-medium hover:opacity-90 shadow-soft transition">
           New flag
         </button>
       </div>
       <div className="divide-y divide-border">
         {flags.map((f) => (
-          <div key={f.id} className="py-3 flex items-center gap-4">
+          <div key={f.id} className="px-5 py-4 flex items-center gap-4 hover:bg-accent/20 transition-colors">
             <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2">
-                <code className="text-xs font-mono font-semibold text-foreground">{f.key}</code>
-                {f.enabled && (
-                  <span className="inline-flex rounded px-1.5 py-0.5 text-[10px] font-medium bg-channel-ai/10 text-channel-ai">
+              <div className="flex items-center gap-2 flex-wrap">
+                <code className="text-xs font-mono font-semibold text-foreground bg-muted px-1.5 py-0.5 rounded">{f.key}</code>
+                {f.enabled ? (
+                  <span className="inline-flex items-center gap-1 rounded-md border border-success/20 bg-success/10 px-1.5 py-0.5 text-[10px] font-medium text-success">
+                    <span className="h-1.5 w-1.5 rounded-full bg-success animate-pulse" />
                     LIVE
+                  </span>
+                ) : (
+                  <span className="inline-flex rounded-md border border-border bg-muted px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground">
+                    OFF
                   </span>
                 )}
               </div>
-              <div className="text-xs text-muted-foreground mt-0.5">{f.description}</div>
+              <div className="text-xs text-muted-foreground mt-1">{f.description}</div>
             </div>
             <div className="flex items-center gap-3 w-64">
               <input
@@ -463,16 +479,16 @@ function FlagsTab({
                 onChange={(e) =>
                   setFlags(flags.map((x) => (x.id === f.id ? { ...x, rollout: Number(e.target.value) } : x)))
                 }
-                className="flex-1 accent-primary"
+                className="flex-1 accent-primary disabled:opacity-40"
                 disabled={!f.enabled}
               />
-              <span className="text-xs tabular-nums text-foreground w-10 text-right">{f.rollout}%</span>
+              <span className="text-xs tabular-nums font-semibold text-foreground w-10 text-right">{f.rollout}%</span>
             </div>
             <button
               onClick={() => setFlags(flags.map((x) => (x.id === f.id ? { ...x, enabled: !x.enabled } : x)))}
               className={cn(
-                "relative h-5 w-9 rounded-full transition-colors",
-                f.enabled ? "bg-primary" : "bg-muted",
+                "relative h-5 w-9 rounded-full transition-colors shrink-0",
+                f.enabled ? "bg-primary" : "bg-muted border border-border",
               )}
             >
               <span
@@ -484,6 +500,59 @@ function FlagsTab({
             </button>
           </div>
         ))}
+      </div>
+    </Card>
+  );
+}
+
+function AuditTab() {
+  const sevColor: Record<string, string> = {
+    info: "bg-muted text-muted-foreground border-border",
+    warning: "bg-warning/10 text-warning border-warning/20",
+    critical: "bg-destructive/10 text-destructive border-destructive/20",
+  };
+  return (
+    <Card className="overflow-hidden">
+      <div className="flex items-center justify-between p-5 border-b border-border">
+        <div>
+          <h3 className="text-sm font-semibold text-foreground">Audit log</h3>
+          <p className="text-xs text-muted-foreground mt-0.5">Every security-relevant action across the platform</p>
+        </div>
+        <button className="rounded-md border border-input bg-card px-3 py-1.5 text-xs font-medium text-foreground hover:bg-muted transition shadow-soft">
+          Export CSV
+        </button>
+      </div>
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead className="bg-muted/40">
+            <tr className="text-[11px] uppercase tracking-wider text-muted-foreground">
+              <th className="text-left font-semibold py-2.5 px-5">When</th>
+              <th className="text-left font-semibold py-2.5 px-3">Actor</th>
+              <th className="text-left font-semibold py-2.5 px-3">Action</th>
+              <th className="text-left font-semibold py-2.5 px-3">Target</th>
+              <th className="text-left font-semibold py-2.5 px-3">IP</th>
+              <th className="text-left font-semibold py-2.5 px-3">Severity</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-border">
+            {auditEvents.map((e) => (
+              <tr key={e.id} className="hover:bg-accent/30 transition-colors">
+                <td className="py-3 px-5 text-xs text-muted-foreground whitespace-nowrap">{e.at}</td>
+                <td className="py-3 px-3 text-xs font-medium text-foreground">{e.actor}</td>
+                <td className="py-3 px-3 text-xs">
+                  <code className="font-mono text-foreground bg-muted px-1.5 py-0.5 rounded">{e.action}</code>
+                </td>
+                <td className="py-3 px-3 text-xs text-muted-foreground">{e.target}</td>
+                <td className="py-3 px-3 text-xs text-muted-foreground tabular-nums whitespace-nowrap">{e.ip}</td>
+                <td className="py-3 px-3">
+                  <span className={cn("inline-flex rounded-md border px-2 py-0.5 text-[10px] font-medium capitalize", sevColor[e.severity])}>
+                    {e.severity}
+                  </span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </Card>
   );
