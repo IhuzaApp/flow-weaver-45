@@ -25,8 +25,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { AppLayout } from "@/components/AppLayout";
-import { Topbar } from "@/components/Topbar";
+import { AdminLayout } from "@/components/AdminLayout";
 import { Card, StatCard } from "@/components/Card";
 import { cn } from "@/lib/utils";
 import {
@@ -71,42 +70,30 @@ function AdminPage() {
       u.email.toLowerCase().includes(query.toLowerCase()),
   );
 
+  const currentLabel = tabs.find((t) => t.id === tab)?.label ?? "Overview";
+
   return (
-    <AppLayout>
-      <Topbar title="Admin Console" subtitle="Platform-wide controls · restricted access" />
+    <AdminLayout activeTab={tab} onTabChange={(id) => setTab(id as Tab)}>
+      <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b border-border bg-background/80 backdrop-blur px-6">
+        <div className="flex-1 min-w-0">
+          <h1 className="text-lg font-semibold text-foreground truncate flex items-center gap-2">
+            <Shield className="h-4 w-4 text-destructive" />
+            Admin · {currentLabel}
+          </h1>
+          <p className="text-xs text-muted-foreground truncate">
+            Platform-wide controls · restricted access
+          </p>
+        </div>
+        <span className="hidden md:inline-flex items-center gap-1.5 rounded-md border border-destructive/30 bg-destructive/10 px-2.5 py-1 text-[11px] font-medium text-destructive">
+          <AlertTriangle className="h-3 w-3" />
+          Super-admin
+        </span>
+        <div className="h-8 w-8 rounded-full bg-destructive/15 border border-destructive/30 text-destructive text-xs font-semibold flex items-center justify-center">
+          SA
+        </div>
+      </header>
       <main className="flex-1 overflow-auto">
         <div className="px-6 py-6 max-w-[1400px]">
-          {/* Warning banner */}
-          <div className="mb-5 flex items-center gap-3 rounded-lg border border-destructive/30 bg-destructive/5 px-4 py-2.5">
-            <AlertTriangle className="h-4 w-4 text-destructive shrink-0" />
-            <div className="text-xs text-foreground">
-              You are in the <strong>super-admin</strong> area. Actions here affect every tenant on the platform.
-            </div>
-          </div>
-
-          {/* Tabs */}
-          <div className="mb-6 flex gap-1 border-b border-border overflow-x-auto">
-            {tabs.map((t) => {
-              const Icon = t.icon;
-              const active = tab === t.id;
-              return (
-                <button
-                  key={t.id}
-                  onClick={() => setTab(t.id)}
-                  className={cn(
-                    "flex items-center gap-2 px-3 py-2 text-sm font-medium border-b-2 -mb-px transition-colors whitespace-nowrap",
-                    active
-                      ? "border-primary text-foreground"
-                      : "border-transparent text-muted-foreground hover:text-foreground",
-                  )}
-                >
-                  <Icon className="h-4 w-4" />
-                  {t.label}
-                </button>
-              );
-            })}
-          </div>
-
           {tab === "overview" && <OverviewTab />}
           {tab === "users" && (
             <UsersTab query={query} setQuery={setQuery} users={filteredUsers} />
@@ -117,7 +104,7 @@ function AdminPage() {
           {tab === "audit" && <AuditTab />}
         </div>
       </main>
-    </AppLayout>
+    </AdminLayout>
   );
 }
 

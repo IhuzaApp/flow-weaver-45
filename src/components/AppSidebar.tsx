@@ -20,7 +20,6 @@ import {
   Code2,
   Zap,
   Globe,
-  Shield,
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -44,7 +43,6 @@ const nav: Array<{ to: string; label: string; icon: typeof LayoutDashboard; exac
   { to: "/dev-api", label: "Developer API", icon: Code2 },
   { to: "/env", label: "Env Variables", icon: Lock },
   { to: "/settings", label: "Settings", icon: Settings },
-  { to: "/admin", label: "Admin Console", icon: Shield, section: "Platform" },
 ];
 
 export function AppSidebar() {
