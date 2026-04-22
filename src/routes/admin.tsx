@@ -150,7 +150,7 @@ function OverviewTab() {
                     fontSize: 12,
                     boxShadow: "var(--shadow-elevated)",
                   }}
-                  formatter={(v: number) => [`$${v.toLocaleString()}`, "MRR"]}
+                  formatter={(v) => [`$${Number(v).toLocaleString()}`, "MRR"]}
                 />
                 <Area type="monotone" dataKey="mrr" stroke="var(--primary)" fill="url(#mrrGrad)" strokeWidth={2.5} />
               </AreaChart>
@@ -158,8 +158,8 @@ function OverviewTab() {
           </div>
         </Card>
 
-        <Card>
-          <h3 className="text-sm font-semibold text-foreground mb-3">Today's volume</h3>
+        <Card className="p-5">
+          <h3 className="text-sm font-semibold text-foreground mb-4">Today's volume</h3>
           <div className="space-y-3">
             <VolumeRow label="Messages sent" value={platformStats.messagesToday.toLocaleString()} icon={Activity} />
             <VolumeRow label="API calls" value={platformStats.apiCallsToday.toLocaleString()} icon={Server} />
@@ -169,12 +169,15 @@ function OverviewTab() {
         </Card>
       </div>
 
-      <Card>
-        <div className="flex items-center justify-between mb-3">
-          <h3 className="text-sm font-semibold text-foreground">Service status</h3>
+      <Card className="p-5">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h3 className="text-sm font-semibold text-foreground">Service status</h3>
+            <p className="text-xs text-muted-foreground mt-0.5">Live health across the platform</p>
+          </div>
           <span className="text-xs text-muted-foreground">Last check: 30s ago</span>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2.5">
           {systemServices.slice(0, 8).map((s) => (
             <ServicePill key={s.id} service={s} />
           ))}
@@ -186,9 +189,11 @@ function OverviewTab() {
 
 function VolumeRow({ label, value, icon: Icon }: { label: string; value: string; icon: typeof Users }) {
   return (
-    <div className="flex items-center justify-between py-1.5 border-b border-border last:border-0">
-      <div className="flex items-center gap-2 text-xs text-muted-foreground">
-        <Icon className="h-3.5 w-3.5" />
+    <div className="flex items-center justify-between py-1 border-b border-border last:border-0 last:pb-0">
+      <div className="flex items-center gap-2.5 text-xs text-muted-foreground">
+        <div className="h-7 w-7 rounded-md bg-muted flex items-center justify-center">
+          <Icon className="h-3.5 w-3.5" />
+        </div>
         {label}
       </div>
       <span className="text-sm font-semibold text-foreground tabular-nums">{value}</span>
@@ -197,21 +202,30 @@ function VolumeRow({ label, value, icon: Icon }: { label: string; value: string;
 }
 
 function ServicePill({ service }: { service: typeof systemServices[number] }) {
+  const dotColor =
+    service.status === "operational"
+      ? "bg-success"
+      : service.status === "degraded"
+        ? "bg-warning"
+        : "bg-destructive";
   const statusColor =
     service.status === "operational"
-      ? "text-channel-ai"
+      ? "text-success"
       : service.status === "degraded"
-        ? "text-channel-sms"
+        ? "text-warning"
         : "text-destructive";
   const StatusIcon =
     service.status === "operational" ? CheckCircle2 : service.status === "degraded" ? AlertTriangle : XCircle;
 
   return (
-    <div className="flex items-center justify-between rounded-md border border-border bg-card/50 px-3 py-2">
-      <div className="min-w-0">
-        <div className="text-xs font-medium text-foreground truncate">{service.name}</div>
-        <div className="text-[11px] text-muted-foreground tabular-nums">
-          {service.uptime}% · {service.latency}ms
+    <div className="flex items-center justify-between rounded-lg border border-border bg-card px-3 py-2.5 hover:border-primary/30 hover:shadow-soft transition">
+      <div className="min-w-0 flex items-center gap-2.5">
+        <span className={cn("h-2 w-2 rounded-full shrink-0", dotColor, service.status !== "down" && "animate-pulse")} />
+        <div className="min-w-0">
+          <div className="text-xs font-medium text-foreground truncate">{service.name}</div>
+          <div className="text-[11px] text-muted-foreground tabular-nums">
+            {service.uptime}% · {service.latency}ms
+          </div>
         </div>
       </div>
       <StatusIcon className={cn("h-4 w-4 shrink-0", statusColor)} />
