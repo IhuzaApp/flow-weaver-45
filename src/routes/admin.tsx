@@ -129,27 +129,30 @@ function OverviewTab() {
               <TrendingUp className="h-3.5 w-3.5" /> +64% YoY
             </span>
           </div>
-          <div className="h-[240px]">
+          <div className="h-[260px] -mx-2">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={revenueTrend}>
+              <AreaChart data={revenueTrend} margin={{ top: 8, right: 12, left: 0, bottom: 0 }}>
                 <defs>
                   <linearGradient id="mrrGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.3} />
-                    <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0} />
+                    <stop offset="5%" stopColor="var(--primary)" stopOpacity={0.35} />
+                    <stop offset="95%" stopColor="var(--primary)" stopOpacity={0} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                <XAxis dataKey="month" stroke="hsl(var(--muted-foreground))" fontSize={11} />
-                <YAxis stroke="hsl(var(--muted-foreground))" fontSize={11} />
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
+                <XAxis dataKey="month" stroke="var(--muted-foreground)" fontSize={11} tickLine={false} axisLine={false} />
+                <YAxis stroke="var(--muted-foreground)" fontSize={11} tickLine={false} axisLine={false} tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`} />
                 <Tooltip
+                  cursor={{ stroke: "var(--border)", strokeWidth: 1 }}
                   contentStyle={{
-                    background: "hsl(var(--popover))",
-                    border: "1px solid hsl(var(--border))",
-                    borderRadius: 8,
+                    background: "var(--popover)",
+                    border: "1px solid var(--border)",
+                    borderRadius: 10,
                     fontSize: 12,
+                    boxShadow: "var(--shadow-elevated)",
                   }}
+                  formatter={(v: number) => [`$${v.toLocaleString()}`, "MRR"]}
                 />
-                <Area type="monotone" dataKey="mrr" stroke="hsl(var(--primary))" fill="url(#mrrGrad)" strokeWidth={2} />
+                <Area type="monotone" dataKey="mrr" stroke="var(--primary)" fill="url(#mrrGrad)" strokeWidth={2.5} />
               </AreaChart>
             </ResponsiveContainer>
           </div>
