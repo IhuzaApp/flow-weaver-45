@@ -30,6 +30,7 @@ import { Route as DevApiRouteImport } from './routes/dev-api'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ContactsRouteImport } from './routes/contacts'
 import { Route as CampaignsRouteImport } from './routes/campaigns'
+import { Route as AutomationsRouteImport } from './routes/automations'
 import { Route as ApiKeysRouteImport } from './routes/api-keys'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
@@ -140,6 +141,11 @@ const CampaignsRoute = CampaignsRouteImport.update({
   path: '/campaigns',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AutomationsRoute = AutomationsRouteImport.update({
+  id: '/automations',
+  path: '/automations',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiKeysRoute = ApiKeysRouteImport.update({
   id: '/api-keys',
   path: '/api-keys',
@@ -165,6 +171,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/api-keys': typeof ApiKeysRoute
+  '/automations': typeof AutomationsRoute
   '/campaigns': typeof CampaignsRoute
   '/contacts': typeof ContactsRoute
   '/dashboard': typeof DashboardRoute
@@ -192,6 +199,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/api-keys': typeof ApiKeysRoute
+  '/automations': typeof AutomationsRoute
   '/campaigns': typeof CampaignsRoute
   '/contacts': typeof ContactsRoute
   '/dashboard': typeof DashboardRoute
@@ -220,6 +228,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/api-keys': typeof ApiKeysRoute
+  '/automations': typeof AutomationsRoute
   '/campaigns': typeof CampaignsRoute
   '/contacts': typeof ContactsRoute
   '/dashboard': typeof DashboardRoute
@@ -249,6 +258,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/api-keys'
+    | '/automations'
     | '/campaigns'
     | '/contacts'
     | '/dashboard'
@@ -276,6 +286,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/api-keys'
+    | '/automations'
     | '/campaigns'
     | '/contacts'
     | '/dashboard'
@@ -303,6 +314,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/api-keys'
+    | '/automations'
     | '/campaigns'
     | '/contacts'
     | '/dashboard'
@@ -331,6 +343,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRoute
   ApiKeysRoute: typeof ApiKeysRoute
+  AutomationsRoute: typeof AutomationsRoute
   CampaignsRoute: typeof CampaignsRoute
   ContactsRoute: typeof ContactsRoute
   DashboardRoute: typeof DashboardRoute
@@ -504,6 +517,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CampaignsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/automations': {
+      id: '/automations'
+      path: '/automations'
+      fullPath: '/automations'
+      preLoaderRoute: typeof AutomationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api-keys': {
       id: '/api-keys'
       path: '/api-keys'
@@ -539,6 +559,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRoute,
   ApiKeysRoute: ApiKeysRoute,
+  AutomationsRoute: AutomationsRoute,
   CampaignsRoute: CampaignsRoute,
   ContactsRoute: ContactsRoute,
   DashboardRoute: DashboardRoute,
