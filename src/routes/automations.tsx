@@ -1,11 +1,15 @@
 import { useState } from "react";
-import { createFileRoute } from "@tanstack/react-router";
-import { Plus, Zap, Search, Play, Pause, MoreHorizontal, ArrowRight, Info } from "lucide-react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Plus, Zap, Search, Play, Pause, MoreHorizontal, ArrowRight, Info, Trash2, Eye } from "lucide-react";
 import { AppLayout } from "@/components/AppLayout";
 import { Topbar } from "@/components/Topbar";
 import { Card } from "@/components/Card";
+import { Modal, Field, inputCls } from "@/components/Modal";
 import { cn } from "@/lib/utils";
 import { automations, automationTemplates, type Automation } from "@/lib/automations";
+import { userAutomationStore, type UserAutomation } from "@/lib/user-content";
+import { useStore } from "@/lib/store";
+import { makeId } from "@/lib/user-flows";
 
 export const Route = createFileRoute("/automations")({
   head: () => ({
@@ -26,28 +30,45 @@ const categoryTint: Record<Automation["category"], string> = {
 
 function AutomationsPage() {
   const [list, setList] = useState(automations);
+  const userList = useStore(userAutomationStore);
   const [cat, setCat] = useState<"all" | Automation["category"]>("all");
+  const [openNew, setOpenNew] = useState(false);
+  const [viewing, setViewing] = useState<Automation | UserAutomation | null>(null);
+
   const filtered = list.filter((a) => cat === "all" || a.category === cat);
+  const filteredUser = userList.filter((a) => cat === "all" || a.category === cat);
 
-  const toggle = (id: string) =>
-    setList((l) => l.map((a) => (a.id === id ? { ...a, enabled: !a.enabled } : a)));
+  const toggle = (id: string) => setList((l) => l.map((a) => (a.id === id ? { ...a, enabled: !a.enabled } : a)));
+  const toggleUser = (id: string) => {
+    const a = userList.find((x) => x.id === id);
+    if (a) userAutomationStore.update((x) => x.id === id, { enabled: !a.enabled });
+  };
 
-  const activeCount = list.filter((a) => a.enabled).length;
-  const totalRuns = list.reduce((s, a) => s + a.runs30d, 0);
+  const activeCount = list.filter((a) => a.enabled).length + userList.filter((a) => a.enabled).length;
 
   return (
     <AppLayout>
       <Topbar
         title="Automations"
-        subtitle={`${activeCount} active · ${totalRuns.toLocaleString()} runs in 30d`}
+        subtitle={`${activeCount} active · ${list.length + userList.length} total`}
         action={
-          <button className="inline-flex items-center gap-1.5 rounded-md bg-foreground px-2.5 py-1.5 text-xs font-medium text-background hover:opacity-90 transition">
-            <Plus className="h-3.5 w-3.5" /> New automation
-          </button>
+          <div className="flex items-center gap-2">
+            <Link
+              to="/my-flows"
+              className="inline-flex items-center gap-1.5 rounded-md border border-input bg-card px-2.5 py-1.5 text-xs font-medium text-foreground hover:bg-muted transition"
+            >
+              Manage flows
+            </Link>
+            <button
+              onClick={() => setOpenNew(true)}
+              className="inline-flex items-center gap-1.5 rounded-md bg-foreground px-2.5 py-1.5 text-xs font-medium text-background hover:opacity-90 transition"
+            >
+              <Plus className="h-3.5 w-3.5" /> New automation
+            </button>
+          </div>
         }
       />
       <main className="flex-1 p-6 space-y-6 overflow-auto">
-        {/* Tooltip banner */}
         <Card className="p-4 flex items-start gap-3 bg-channel-ai/5 border-channel-ai/20">
           <div className="h-8 w-8 rounded-md bg-channel-ai/15 text-channel-ai flex items-center justify-center shrink-0">
             <Info className="h-4 w-4" />
@@ -55,33 +76,29 @@ function AutomationsPage() {
           <div className="flex-1">
             <div className="text-sm font-semibold text-foreground">What are automations?</div>
             <p className="text-xs text-muted-foreground mt-0.5">
-              Pre-built workflows that run in the background — triage tickets, recover failed payments, welcome new customers, and more. Think of them as small "employees" that never sleep.
+              Pre-built workflows that run in the background — triage tickets, recover failed payments, welcome new customers, and more.
             </p>
           </div>
         </Card>
 
-        {/* Templates */}
         <div>
           <div className="flex items-center justify-between mb-3">
             <div>
               <h3 className="font-semibold text-foreground">Start from a template</h3>
               <p className="text-xs text-muted-foreground">Ready-to-go automations tailored to your business.</p>
             </div>
-            <button className="text-xs text-primary hover:underline">Browse all →</button>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {automationTemplates.map((t) => {
               const I = t.icon;
               return (
-                <Card key={t.id} className="p-4 hover:border-primary/40 cursor-pointer group transition">
+                <Card key={t.id} className="p-4 hover:border-primary/40 cursor-pointer group transition" onClick={() => setOpenNew(true)}>
                   <div className="flex items-start gap-3">
                     <div className="h-9 w-9 rounded-md bg-accent text-accent-foreground flex items-center justify-center shrink-0">
                       <I className="h-4 w-4" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2">
-                        <div className="text-sm font-semibold text-foreground">{t.name}</div>
-                      </div>
+                      <div className="text-sm font-semibold text-foreground">{t.name}</div>
                       <div className="text-[11px] text-muted-foreground mt-0.5 uppercase tracking-wide">{t.uses}</div>
                       <p className="text-xs text-muted-foreground mt-1.5">{t.description}</p>
                     </div>
@@ -93,7 +110,6 @@ function AutomationsPage() {
           </div>
         </div>
 
-        {/* Filters */}
         <div className="flex items-center gap-2 flex-wrap">
           <div className="flex items-center gap-2 rounded-md border border-input bg-card px-2.5 py-1.5 flex-1 min-w-[220px]">
             <Search className="h-3.5 w-3.5 text-muted-foreground" />
@@ -104,8 +120,10 @@ function AutomationsPage() {
               <button
                 key={c}
                 onClick={() => setCat(c)}
-                className={cn("rounded-full px-2.5 py-1 text-[11px] font-medium transition border capitalize",
-                  cat === c ? "bg-foreground text-background border-transparent" : "bg-card text-muted-foreground border-border hover:text-foreground")}
+                className={cn(
+                  "rounded-full px-2.5 py-1 text-[11px] font-medium transition border capitalize",
+                  cat === c ? "bg-foreground text-background border-transparent" : "bg-card text-muted-foreground border-border hover:text-foreground",
+                )}
               >
                 {c}
               </button>
@@ -113,7 +131,54 @@ function AutomationsPage() {
           </div>
         </div>
 
-        {/* Automation list */}
+        {filteredUser.length > 0 && (
+          <div>
+            <div className="text-xs font-semibold uppercase tracking-wider text-primary mb-2">Your automations</div>
+            <div className="space-y-3">
+              {filteredUser.map((a) => (
+                <Card key={a.id} className="p-4">
+                  <div className="flex items-start gap-4">
+                    <div className={cn("h-10 w-10 rounded-lg flex items-center justify-center shrink-0",
+                      a.enabled ? "bg-gradient-primary text-primary-foreground" : "bg-muted text-muted-foreground")}>
+                      <Zap className="h-5 w-5" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <div className="text-sm font-semibold text-foreground">{a.name}</div>
+                        <span className={cn("text-[10px] font-medium px-1.5 py-0.5 rounded border capitalize", categoryTint[a.category])}>{a.category}</span>
+                        {!a.enabled && <span className="text-[10px] font-medium px-1.5 py-0.5 rounded border bg-muted text-muted-foreground border-border">Paused</span>}
+                      </div>
+                      <p className="text-xs text-muted-foreground mt-1">{a.description}</p>
+                      <div className="mt-3 flex items-center gap-2 flex-wrap text-[11px]">
+                        <span className="inline-flex items-center gap-1 rounded bg-accent text-accent-foreground px-1.5 py-0.5 font-medium">
+                          <Zap className="h-2.5 w-2.5" /> Trigger: {a.trigger}
+                        </span>
+                        {a.actions.map((act, i) => (
+                          <span key={i} className="inline-flex items-center gap-1 text-muted-foreground">
+                            <ArrowRight className="h-2.5 w-2.5" />
+                            <span className="rounded border border-border bg-card px-1.5 py-0.5">{act}</span>
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-1 shrink-0">
+                      <button onClick={() => setViewing(a)} className="rounded-md border border-input bg-card p-1.5 text-muted-foreground hover:text-foreground transition" title="View">
+                        <Eye className="h-3.5 w-3.5" />
+                      </button>
+                      <button onClick={() => toggleUser(a.id)} className="rounded-md border border-input bg-card p-1.5 text-muted-foreground hover:text-foreground transition" title={a.enabled ? "Pause" : "Activate"}>
+                        {a.enabled ? <Pause className="h-3.5 w-3.5" /> : <Play className="h-3.5 w-3.5" />}
+                      </button>
+                      <button onClick={() => userAutomationStore.remove((x) => x.id === a.id)} className="rounded-md border border-input bg-card p-1.5 text-muted-foreground hover:text-destructive transition">
+                        <Trash2 className="h-3.5 w-3.5" />
+                      </button>
+                    </div>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </div>
+        )}
+
         <div className="space-y-3">
           {filtered.map((a) => {
             const I = a.icon;
@@ -127,15 +192,10 @@ function AutomationsPage() {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
                       <div className="text-sm font-semibold text-foreground">{a.name}</div>
-                      <span className={cn("text-[10px] font-medium px-1.5 py-0.5 rounded border capitalize", categoryTint[a.category])}>
-                        {a.category}
-                      </span>
-                      {!a.enabled && (
-                        <span className="text-[10px] font-medium px-1.5 py-0.5 rounded border bg-muted text-muted-foreground border-border">Paused</span>
-                      )}
+                      <span className={cn("text-[10px] font-medium px-1.5 py-0.5 rounded border capitalize", categoryTint[a.category])}>{a.category}</span>
+                      {!a.enabled && <span className="text-[10px] font-medium px-1.5 py-0.5 rounded border bg-muted text-muted-foreground border-border">Paused</span>}
                     </div>
                     <p className="text-xs text-muted-foreground mt-1">{a.description}</p>
-
                     <div className="mt-3 flex items-center gap-2 flex-wrap text-[11px]">
                       <span className="inline-flex items-center gap-1 rounded bg-accent text-accent-foreground px-1.5 py-0.5 font-medium">
                         <Zap className="h-2.5 w-2.5" /> Trigger: {a.trigger}
@@ -147,22 +207,17 @@ function AutomationsPage() {
                         </span>
                       ))}
                     </div>
-
                     <div className="mt-3 flex items-center gap-4 text-[11px] text-muted-foreground">
                       <span><span className="font-semibold text-foreground">{a.runs30d.toLocaleString()}</span> runs · 30d</span>
                       <span><span className="font-semibold text-foreground">{a.successRate}%</span> success</span>
                     </div>
                   </div>
-
                   <div className="flex items-center gap-2 shrink-0">
-                    <button
-                      onClick={() => toggle(a.id)}
-                      title={a.enabled ? "Pause automation" : "Activate automation"}
-                      className={cn("inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-xs font-medium transition",
-                        a.enabled
-                          ? "border-input bg-card text-foreground hover:bg-accent"
-                          : "border-transparent bg-foreground text-background hover:opacity-90")}
-                    >
+                    <button onClick={() => setViewing(a)} className="rounded-md border border-input bg-card p-1.5 text-muted-foreground hover:text-foreground transition" title="View">
+                      <Eye className="h-3.5 w-3.5" />
+                    </button>
+                    <button onClick={() => toggle(a.id)} className={cn("inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-xs font-medium transition",
+                      a.enabled ? "border-input bg-card text-foreground hover:bg-accent" : "border-transparent bg-foreground text-background hover:opacity-90")}>
                       {a.enabled ? <><Pause className="h-3 w-3" /> Pause</> : <><Play className="h-3 w-3" /> Activate</>}
                     </button>
                     <button className="rounded-md border border-input bg-card p-1.5 text-muted-foreground hover:text-foreground transition">
@@ -175,6 +230,108 @@ function AutomationsPage() {
           })}
         </div>
       </main>
+
+      <NewAutomationModal open={openNew} onClose={() => setOpenNew(false)} />
+      {viewing && <ViewAutomationModal automation={viewing} onClose={() => setViewing(null)} />}
     </AppLayout>
+  );
+}
+
+function NewAutomationModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const [form, setForm] = useState({
+    name: "",
+    description: "",
+    trigger: "New ticket created",
+    category: "support" as UserAutomation["category"],
+    actions: "",
+  });
+  const submit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!form.name.trim()) return;
+    userAutomationStore.add({
+      id: makeId("ua"),
+      name: form.name.trim(),
+      description: form.description.trim() || "No description.",
+      trigger: form.trigger,
+      category: form.category,
+      actions: form.actions.split("\n").map((a) => a.trim()).filter(Boolean),
+      enabled: true,
+      createdAt: new Date().toISOString(),
+    });
+    setForm({ name: "", description: "", trigger: "New ticket created", category: "support", actions: "" });
+    onClose();
+  };
+  return (
+    <Modal open={open} onClose={onClose} title="Create a new automation" size="lg">
+      <form onSubmit={submit} className="space-y-4">
+        <Field label="Name">
+          <input required autoFocus value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className={inputCls} placeholder="Auto-respond after hours" />
+        </Field>
+        <Field label="Description">
+          <textarea rows={2} value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className={inputCls} />
+        </Field>
+        <div className="grid grid-cols-2 gap-4">
+          <Field label="Trigger">
+            <select value={form.trigger} onChange={(e) => setForm({ ...form, trigger: e.target.value })} className={inputCls}>
+              <option>New ticket created</option>
+              <option>Customer reply contains keyword</option>
+              <option>Cart abandoned &gt; 1h</option>
+              <option>New contact via any channel</option>
+              <option>Payment webhook: failed</option>
+              <option>Scheduled (cron)</option>
+            </select>
+          </Field>
+          <Field label="Category">
+            <select value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value as UserAutomation["category"] })} className={inputCls}>
+              <option value="support">Support</option>
+              <option value="sales">Sales</option>
+              <option value="marketing">Marketing</option>
+              <option value="ops">Ops</option>
+            </select>
+          </Field>
+        </div>
+        <Field label="Actions" hint="One per line, in order">
+          <textarea rows={4} value={form.actions} onChange={(e) => setForm({ ...form, actions: e.target.value })} className={cn(inputCls, "font-mono text-xs")} placeholder={"AI classify intent\nAssign to team\nNotify on Slack"} />
+        </Field>
+        <div className="flex items-center justify-end gap-2 pt-2 border-t border-border">
+          <button type="button" onClick={onClose} className="rounded-md border border-input bg-card px-3 py-2 text-sm font-medium text-foreground hover:bg-muted transition">Cancel</button>
+          <button type="submit" className="rounded-md bg-foreground px-4 py-2 text-sm font-medium text-background hover:opacity-90 transition">Create automation</button>
+        </div>
+      </form>
+    </Modal>
+  );
+}
+
+function ViewAutomationModal({ automation, onClose }: { automation: Automation | UserAutomation; onClose: () => void }) {
+  return (
+    <Modal open onClose={onClose} title={automation.name} description={automation.description} size="lg">
+      <div className="space-y-4 text-sm">
+        <div>
+          <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1.5">Trigger</div>
+          <div className="rounded-md border border-border bg-muted/30 px-3 py-2 text-foreground">{automation.trigger}</div>
+        </div>
+        <div>
+          <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1.5">Actions</div>
+          <ol className="space-y-1.5">
+            {automation.actions.map((a, i) => (
+              <li key={i} className="flex items-center gap-2 rounded-md border border-border bg-card px-3 py-2 text-foreground">
+                <span className="text-[11px] font-semibold text-muted-foreground w-5">{i + 1}.</span>
+                {a}
+              </li>
+            ))}
+          </ol>
+        </div>
+        <div className="grid grid-cols-2 gap-3 text-xs">
+          <div className="rounded-md border border-border bg-muted/30 p-3">
+            <div className="text-muted-foreground">Category</div>
+            <div className="mt-1 font-semibold text-foreground capitalize">{automation.category}</div>
+          </div>
+          <div className="rounded-md border border-border bg-muted/30 p-3">
+            <div className="text-muted-foreground">Status</div>
+            <div className="mt-1 font-semibold text-foreground">{automation.enabled ? "Active" : "Paused"}</div>
+          </div>
+        </div>
+      </div>
+    </Modal>
   );
 }

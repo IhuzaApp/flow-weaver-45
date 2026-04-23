@@ -12,24 +12,29 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as VoiceRouteImport } from './routes/voice'
 import { Route as TicketsRouteImport } from './routes/tickets'
 import { Route as TemplatesRouteImport } from './routes/templates'
+import { Route as SurveysRouteImport } from './routes/surveys'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as PlaygroundRouteImport } from './routes/playground'
 import { Route as PaymentsRouteImport } from './routes/payments'
+import { Route as MyFlowsRouteImport } from './routes/my-flows'
 import { Route as MessagesRouteImport } from './routes/messages'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as IntegrationsRouteImport } from './routes/integrations'
 import { Route as FlowsRouteImport } from './routes/flows'
 import { Route as EnvRouteImport } from './routes/env'
 import { Route as DomainsRouteImport } from './routes/domains'
+import { Route as DocsRouteImport } from './routes/docs'
 import { Route as DevApiRouteImport } from './routes/dev-api'
 import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as ContactsRouteImport } from './routes/contacts'
 import { Route as CampaignsRouteImport } from './routes/campaigns'
 import { Route as AutomationsRouteImport } from './routes/automations'
 import { Route as ApiKeysRouteImport } from './routes/api-keys'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SIdRouteImport } from './routes/s.$id'
 
 const VoiceRoute = VoiceRouteImport.update({
   id: '/voice',
@@ -44,6 +49,11 @@ const TicketsRoute = TicketsRouteImport.update({
 const TemplatesRoute = TemplatesRouteImport.update({
   id: '/templates',
   path: '/templates',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SurveysRoute = SurveysRouteImport.update({
+  id: '/surveys',
+  path: '/surveys',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SignupRoute = SignupRouteImport.update({
@@ -69,6 +79,11 @@ const PlaygroundRoute = PlaygroundRouteImport.update({
 const PaymentsRoute = PaymentsRouteImport.update({
   id: '/payments',
   path: '/payments',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyFlowsRoute = MyFlowsRouteImport.update({
+  id: '/my-flows',
+  path: '/my-flows',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MessagesRoute = MessagesRouteImport.update({
@@ -101,6 +116,11 @@ const DomainsRoute = DomainsRouteImport.update({
   path: '/domains',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DocsRoute = DocsRouteImport.update({
+  id: '/docs',
+  path: '/docs',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DevApiRoute = DevApiRouteImport.update({
   id: '/dev-api',
   path: '/dev-api',
@@ -109,6 +129,11 @@ const DevApiRoute = DevApiRouteImport.update({
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactsRoute = ContactsRouteImport.update({
+  id: '/contacts',
+  path: '/contacts',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CampaignsRoute = CampaignsRouteImport.update({
@@ -136,6 +161,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SIdRoute = SIdRouteImport.update({
+  id: '/s/$id',
+  path: '/s/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -143,22 +173,27 @@ export interface FileRoutesByFullPath {
   '/api-keys': typeof ApiKeysRoute
   '/automations': typeof AutomationsRoute
   '/campaigns': typeof CampaignsRoute
+  '/contacts': typeof ContactsRoute
   '/dashboard': typeof DashboardRoute
   '/dev-api': typeof DevApiRoute
+  '/docs': typeof DocsRoute
   '/domains': typeof DomainsRoute
   '/env': typeof EnvRoute
   '/flows': typeof FlowsRoute
   '/integrations': typeof IntegrationsRoute
   '/login': typeof LoginRoute
   '/messages': typeof MessagesRoute
+  '/my-flows': typeof MyFlowsRoute
   '/payments': typeof PaymentsRoute
   '/playground': typeof PlaygroundRoute
   '/projects': typeof ProjectsRoute
   '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
+  '/surveys': typeof SurveysRoute
   '/templates': typeof TemplatesRoute
   '/tickets': typeof TicketsRoute
   '/voice': typeof VoiceRoute
+  '/s/$id': typeof SIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -166,22 +201,27 @@ export interface FileRoutesByTo {
   '/api-keys': typeof ApiKeysRoute
   '/automations': typeof AutomationsRoute
   '/campaigns': typeof CampaignsRoute
+  '/contacts': typeof ContactsRoute
   '/dashboard': typeof DashboardRoute
   '/dev-api': typeof DevApiRoute
+  '/docs': typeof DocsRoute
   '/domains': typeof DomainsRoute
   '/env': typeof EnvRoute
   '/flows': typeof FlowsRoute
   '/integrations': typeof IntegrationsRoute
   '/login': typeof LoginRoute
   '/messages': typeof MessagesRoute
+  '/my-flows': typeof MyFlowsRoute
   '/payments': typeof PaymentsRoute
   '/playground': typeof PlaygroundRoute
   '/projects': typeof ProjectsRoute
   '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
+  '/surveys': typeof SurveysRoute
   '/templates': typeof TemplatesRoute
   '/tickets': typeof TicketsRoute
   '/voice': typeof VoiceRoute
+  '/s/$id': typeof SIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -190,22 +230,27 @@ export interface FileRoutesById {
   '/api-keys': typeof ApiKeysRoute
   '/automations': typeof AutomationsRoute
   '/campaigns': typeof CampaignsRoute
+  '/contacts': typeof ContactsRoute
   '/dashboard': typeof DashboardRoute
   '/dev-api': typeof DevApiRoute
+  '/docs': typeof DocsRoute
   '/domains': typeof DomainsRoute
   '/env': typeof EnvRoute
   '/flows': typeof FlowsRoute
   '/integrations': typeof IntegrationsRoute
   '/login': typeof LoginRoute
   '/messages': typeof MessagesRoute
+  '/my-flows': typeof MyFlowsRoute
   '/payments': typeof PaymentsRoute
   '/playground': typeof PlaygroundRoute
   '/projects': typeof ProjectsRoute
   '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
+  '/surveys': typeof SurveysRoute
   '/templates': typeof TemplatesRoute
   '/tickets': typeof TicketsRoute
   '/voice': typeof VoiceRoute
+  '/s/$id': typeof SIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -215,22 +260,27 @@ export interface FileRouteTypes {
     | '/api-keys'
     | '/automations'
     | '/campaigns'
+    | '/contacts'
     | '/dashboard'
     | '/dev-api'
+    | '/docs'
     | '/domains'
     | '/env'
     | '/flows'
     | '/integrations'
     | '/login'
     | '/messages'
+    | '/my-flows'
     | '/payments'
     | '/playground'
     | '/projects'
     | '/settings'
     | '/signup'
+    | '/surveys'
     | '/templates'
     | '/tickets'
     | '/voice'
+    | '/s/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -238,22 +288,27 @@ export interface FileRouteTypes {
     | '/api-keys'
     | '/automations'
     | '/campaigns'
+    | '/contacts'
     | '/dashboard'
     | '/dev-api'
+    | '/docs'
     | '/domains'
     | '/env'
     | '/flows'
     | '/integrations'
     | '/login'
     | '/messages'
+    | '/my-flows'
     | '/payments'
     | '/playground'
     | '/projects'
     | '/settings'
     | '/signup'
+    | '/surveys'
     | '/templates'
     | '/tickets'
     | '/voice'
+    | '/s/$id'
   id:
     | '__root__'
     | '/'
@@ -261,22 +316,27 @@ export interface FileRouteTypes {
     | '/api-keys'
     | '/automations'
     | '/campaigns'
+    | '/contacts'
     | '/dashboard'
     | '/dev-api'
+    | '/docs'
     | '/domains'
     | '/env'
     | '/flows'
     | '/integrations'
     | '/login'
     | '/messages'
+    | '/my-flows'
     | '/payments'
     | '/playground'
     | '/projects'
     | '/settings'
     | '/signup'
+    | '/surveys'
     | '/templates'
     | '/tickets'
     | '/voice'
+    | '/s/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -285,22 +345,27 @@ export interface RootRouteChildren {
   ApiKeysRoute: typeof ApiKeysRoute
   AutomationsRoute: typeof AutomationsRoute
   CampaignsRoute: typeof CampaignsRoute
+  ContactsRoute: typeof ContactsRoute
   DashboardRoute: typeof DashboardRoute
   DevApiRoute: typeof DevApiRoute
+  DocsRoute: typeof DocsRoute
   DomainsRoute: typeof DomainsRoute
   EnvRoute: typeof EnvRoute
   FlowsRoute: typeof FlowsRoute
   IntegrationsRoute: typeof IntegrationsRoute
   LoginRoute: typeof LoginRoute
   MessagesRoute: typeof MessagesRoute
+  MyFlowsRoute: typeof MyFlowsRoute
   PaymentsRoute: typeof PaymentsRoute
   PlaygroundRoute: typeof PlaygroundRoute
   ProjectsRoute: typeof ProjectsRoute
   SettingsRoute: typeof SettingsRoute
   SignupRoute: typeof SignupRoute
+  SurveysRoute: typeof SurveysRoute
   TemplatesRoute: typeof TemplatesRoute
   TicketsRoute: typeof TicketsRoute
   VoiceRoute: typeof VoiceRoute
+  SIdRoute: typeof SIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -324,6 +389,13 @@ declare module '@tanstack/react-router' {
       path: '/templates'
       fullPath: '/templates'
       preLoaderRoute: typeof TemplatesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/surveys': {
+      id: '/surveys'
+      path: '/surveys'
+      fullPath: '/surveys'
+      preLoaderRoute: typeof SurveysRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/signup': {
@@ -359,6 +431,13 @@ declare module '@tanstack/react-router' {
       path: '/payments'
       fullPath: '/payments'
       preLoaderRoute: typeof PaymentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my-flows': {
+      id: '/my-flows'
+      path: '/my-flows'
+      fullPath: '/my-flows'
+      preLoaderRoute: typeof MyFlowsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/messages': {
@@ -403,6 +482,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DomainsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/docs': {
+      id: '/docs'
+      path: '/docs'
+      fullPath: '/docs'
+      preLoaderRoute: typeof DocsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dev-api': {
       id: '/dev-api'
       path: '/dev-api'
@@ -415,6 +501,13 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contacts': {
+      id: '/contacts'
+      path: '/contacts'
+      fullPath: '/contacts'
+      preLoaderRoute: typeof ContactsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/campaigns': {
@@ -452,6 +545,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/s/$id': {
+      id: '/s/$id'
+      path: '/s/$id'
+      fullPath: '/s/$id'
+      preLoaderRoute: typeof SIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -461,22 +561,27 @@ const rootRouteChildren: RootRouteChildren = {
   ApiKeysRoute: ApiKeysRoute,
   AutomationsRoute: AutomationsRoute,
   CampaignsRoute: CampaignsRoute,
+  ContactsRoute: ContactsRoute,
   DashboardRoute: DashboardRoute,
   DevApiRoute: DevApiRoute,
+  DocsRoute: DocsRoute,
   DomainsRoute: DomainsRoute,
   EnvRoute: EnvRoute,
   FlowsRoute: FlowsRoute,
   IntegrationsRoute: IntegrationsRoute,
   LoginRoute: LoginRoute,
   MessagesRoute: MessagesRoute,
+  MyFlowsRoute: MyFlowsRoute,
   PaymentsRoute: PaymentsRoute,
   PlaygroundRoute: PlaygroundRoute,
   ProjectsRoute: ProjectsRoute,
   SettingsRoute: SettingsRoute,
   SignupRoute: SignupRoute,
+  SurveysRoute: SurveysRoute,
   TemplatesRoute: TemplatesRoute,
   TicketsRoute: TicketsRoute,
   VoiceRoute: VoiceRoute,
+  SIdRoute: SIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
