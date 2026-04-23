@@ -28,11 +28,11 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/my-flows")({
   head: () => ({
     meta: [
-      { title: "Automations & Flows — Relay" },
+      { title: "My Flows — Relay" },
       { name: "description", content: "Create flows, configure triggers and connect resources like phone numbers, links and shared folders." },
     ],
   }),
-  component: AutomationsPage,
+  component: MyFlowsPage,
 });
 
 const channelOptions: Array<{ id: UserFlow["channels"][number]; label: string }> = [
@@ -49,7 +49,7 @@ const resourceMeta: Record<FlowResource["kind"], { label: string; icon: typeof P
   folder: { label: "Shared folder", icon: Folder, placeholder: "https://drive.google.com/drive/folders/…", hint: "Cloud folder Relay can read or write to (Drive, S3, Dropbox)." },
 };
 
-function AutomationsPage() {
+function MyFlowsPage() {
   const flows = useStore(userFlowStore);
   const [openNew, setOpenNew] = useState(false);
   const [editing, setEditing] = useState<UserFlow | null>(null);
