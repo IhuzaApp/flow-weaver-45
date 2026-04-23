@@ -1,4 +1,5 @@
 import { Search, Bell, Plus } from "lucide-react";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export function Topbar({ title, subtitle, action }: { title: string; subtitle?: string; action?: React.ReactNode }) {
   return (
@@ -15,6 +16,7 @@ export function Topbar({ title, subtitle, action }: { title: string; subtitle?: 
         />
         <kbd className="text-[10px] rounded bg-muted px-1.5 py-0.5">⌘K</kbd>
       </div>
+      <ThemeToggle />
       <button className="relative rounded-md border border-input bg-card p-2 text-foreground hover:bg-muted transition shadow-soft">
         <Bell className="h-4 w-4" />
         <span className="absolute -top-0.5 -right-0.5 h-2 w-2 rounded-full bg-destructive" />
