@@ -25,7 +25,7 @@ import {
 import { useStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/automations")({
+export const Route = createFileRoute("/my-flows")({
   head: () => ({
     meta: [
       { title: "Automations & Flows — Relay" },
