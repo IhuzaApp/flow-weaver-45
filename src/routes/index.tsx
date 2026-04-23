@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import {
   Sparkles,
   Phone,
@@ -85,6 +86,7 @@ function SiteHeader() {
           <a href="#pricing" className="hover:text-foreground transition">Pricing</a>
         </nav>
         <div className="flex-1" />
+        <ThemeToggle />
         <Link to="/login" className="text-sm font-medium text-foreground hover:text-primary transition">
           Sign in
         </Link>
