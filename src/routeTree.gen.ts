@@ -35,6 +35,19 @@ import { Route as ApiKeysRouteImport } from './routes/api-keys'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SIdRouteImport } from './routes/s.$id'
+import { Route as DocsVoiceRouteImport } from './routes/docs.voice'
+import { Route as DocsTicketsRouteImport } from './routes/docs.tickets'
+import { Route as DocsTemplatesRouteImport } from './routes/docs.templates'
+import { Route as DocsSurveysRouteImport } from './routes/docs.surveys'
+import { Route as DocsProjectsRouteImport } from './routes/docs.projects'
+import { Route as DocsPaymentsRouteImport } from './routes/docs.payments'
+import { Route as DocsGettingStartedRouteImport } from './routes/docs.getting-started'
+import { Route as DocsFlowsRouteImport } from './routes/docs.flows'
+import { Route as DocsDomainsRouteImport } from './routes/docs.domains'
+import { Route as DocsDeveloperApiRouteImport } from './routes/docs.developer-api'
+import { Route as DocsContactsRouteImport } from './routes/docs.contacts'
+import { Route as DocsAutomationsRouteImport } from './routes/docs.automations'
+import { Route as DocsApiKeysRouteImport } from './routes/docs.api-keys'
 
 const VoiceRoute = VoiceRouteImport.update({
   id: '/voice',
@@ -166,6 +179,71 @@ const SIdRoute = SIdRouteImport.update({
   path: '/s/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DocsVoiceRoute = DocsVoiceRouteImport.update({
+  id: '/voice',
+  path: '/voice',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsTicketsRoute = DocsTicketsRouteImport.update({
+  id: '/tickets',
+  path: '/tickets',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsTemplatesRoute = DocsTemplatesRouteImport.update({
+  id: '/templates',
+  path: '/templates',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsSurveysRoute = DocsSurveysRouteImport.update({
+  id: '/surveys',
+  path: '/surveys',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsProjectsRoute = DocsProjectsRouteImport.update({
+  id: '/projects',
+  path: '/projects',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsPaymentsRoute = DocsPaymentsRouteImport.update({
+  id: '/payments',
+  path: '/payments',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsGettingStartedRoute = DocsGettingStartedRouteImport.update({
+  id: '/getting-started',
+  path: '/getting-started',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsFlowsRoute = DocsFlowsRouteImport.update({
+  id: '/flows',
+  path: '/flows',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsDomainsRoute = DocsDomainsRouteImport.update({
+  id: '/domains',
+  path: '/domains',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsDeveloperApiRoute = DocsDeveloperApiRouteImport.update({
+  id: '/developer-api',
+  path: '/developer-api',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsContactsRoute = DocsContactsRouteImport.update({
+  id: '/contacts',
+  path: '/contacts',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsAutomationsRoute = DocsAutomationsRouteImport.update({
+  id: '/automations',
+  path: '/automations',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsApiKeysRoute = DocsApiKeysRouteImport.update({
+  id: '/api-keys',
+  path: '/api-keys',
+  getParentRoute: () => DocsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -176,7 +254,7 @@ export interface FileRoutesByFullPath {
   '/contacts': typeof ContactsRoute
   '/dashboard': typeof DashboardRoute
   '/dev-api': typeof DevApiRoute
-  '/docs': typeof DocsRoute
+  '/docs': typeof DocsRouteWithChildren
   '/domains': typeof DomainsRoute
   '/env': typeof EnvRoute
   '/flows': typeof FlowsRoute
@@ -193,6 +271,19 @@ export interface FileRoutesByFullPath {
   '/templates': typeof TemplatesRoute
   '/tickets': typeof TicketsRoute
   '/voice': typeof VoiceRoute
+  '/docs/api-keys': typeof DocsApiKeysRoute
+  '/docs/automations': typeof DocsAutomationsRoute
+  '/docs/contacts': typeof DocsContactsRoute
+  '/docs/developer-api': typeof DocsDeveloperApiRoute
+  '/docs/domains': typeof DocsDomainsRoute
+  '/docs/flows': typeof DocsFlowsRoute
+  '/docs/getting-started': typeof DocsGettingStartedRoute
+  '/docs/payments': typeof DocsPaymentsRoute
+  '/docs/projects': typeof DocsProjectsRoute
+  '/docs/surveys': typeof DocsSurveysRoute
+  '/docs/templates': typeof DocsTemplatesRoute
+  '/docs/tickets': typeof DocsTicketsRoute
+  '/docs/voice': typeof DocsVoiceRoute
   '/s/$id': typeof SIdRoute
 }
 export interface FileRoutesByTo {
@@ -204,7 +295,7 @@ export interface FileRoutesByTo {
   '/contacts': typeof ContactsRoute
   '/dashboard': typeof DashboardRoute
   '/dev-api': typeof DevApiRoute
-  '/docs': typeof DocsRoute
+  '/docs': typeof DocsRouteWithChildren
   '/domains': typeof DomainsRoute
   '/env': typeof EnvRoute
   '/flows': typeof FlowsRoute
@@ -221,6 +312,19 @@ export interface FileRoutesByTo {
   '/templates': typeof TemplatesRoute
   '/tickets': typeof TicketsRoute
   '/voice': typeof VoiceRoute
+  '/docs/api-keys': typeof DocsApiKeysRoute
+  '/docs/automations': typeof DocsAutomationsRoute
+  '/docs/contacts': typeof DocsContactsRoute
+  '/docs/developer-api': typeof DocsDeveloperApiRoute
+  '/docs/domains': typeof DocsDomainsRoute
+  '/docs/flows': typeof DocsFlowsRoute
+  '/docs/getting-started': typeof DocsGettingStartedRoute
+  '/docs/payments': typeof DocsPaymentsRoute
+  '/docs/projects': typeof DocsProjectsRoute
+  '/docs/surveys': typeof DocsSurveysRoute
+  '/docs/templates': typeof DocsTemplatesRoute
+  '/docs/tickets': typeof DocsTicketsRoute
+  '/docs/voice': typeof DocsVoiceRoute
   '/s/$id': typeof SIdRoute
 }
 export interface FileRoutesById {
@@ -233,7 +337,7 @@ export interface FileRoutesById {
   '/contacts': typeof ContactsRoute
   '/dashboard': typeof DashboardRoute
   '/dev-api': typeof DevApiRoute
-  '/docs': typeof DocsRoute
+  '/docs': typeof DocsRouteWithChildren
   '/domains': typeof DomainsRoute
   '/env': typeof EnvRoute
   '/flows': typeof FlowsRoute
@@ -250,6 +354,19 @@ export interface FileRoutesById {
   '/templates': typeof TemplatesRoute
   '/tickets': typeof TicketsRoute
   '/voice': typeof VoiceRoute
+  '/docs/api-keys': typeof DocsApiKeysRoute
+  '/docs/automations': typeof DocsAutomationsRoute
+  '/docs/contacts': typeof DocsContactsRoute
+  '/docs/developer-api': typeof DocsDeveloperApiRoute
+  '/docs/domains': typeof DocsDomainsRoute
+  '/docs/flows': typeof DocsFlowsRoute
+  '/docs/getting-started': typeof DocsGettingStartedRoute
+  '/docs/payments': typeof DocsPaymentsRoute
+  '/docs/projects': typeof DocsProjectsRoute
+  '/docs/surveys': typeof DocsSurveysRoute
+  '/docs/templates': typeof DocsTemplatesRoute
+  '/docs/tickets': typeof DocsTicketsRoute
+  '/docs/voice': typeof DocsVoiceRoute
   '/s/$id': typeof SIdRoute
 }
 export interface FileRouteTypes {
@@ -280,6 +397,19 @@ export interface FileRouteTypes {
     | '/templates'
     | '/tickets'
     | '/voice'
+    | '/docs/api-keys'
+    | '/docs/automations'
+    | '/docs/contacts'
+    | '/docs/developer-api'
+    | '/docs/domains'
+    | '/docs/flows'
+    | '/docs/getting-started'
+    | '/docs/payments'
+    | '/docs/projects'
+    | '/docs/surveys'
+    | '/docs/templates'
+    | '/docs/tickets'
+    | '/docs/voice'
     | '/s/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -308,6 +438,19 @@ export interface FileRouteTypes {
     | '/templates'
     | '/tickets'
     | '/voice'
+    | '/docs/api-keys'
+    | '/docs/automations'
+    | '/docs/contacts'
+    | '/docs/developer-api'
+    | '/docs/domains'
+    | '/docs/flows'
+    | '/docs/getting-started'
+    | '/docs/payments'
+    | '/docs/projects'
+    | '/docs/surveys'
+    | '/docs/templates'
+    | '/docs/tickets'
+    | '/docs/voice'
     | '/s/$id'
   id:
     | '__root__'
@@ -336,6 +479,19 @@ export interface FileRouteTypes {
     | '/templates'
     | '/tickets'
     | '/voice'
+    | '/docs/api-keys'
+    | '/docs/automations'
+    | '/docs/contacts'
+    | '/docs/developer-api'
+    | '/docs/domains'
+    | '/docs/flows'
+    | '/docs/getting-started'
+    | '/docs/payments'
+    | '/docs/projects'
+    | '/docs/surveys'
+    | '/docs/templates'
+    | '/docs/tickets'
+    | '/docs/voice'
     | '/s/$id'
   fileRoutesById: FileRoutesById
 }
@@ -348,7 +504,7 @@ export interface RootRouteChildren {
   ContactsRoute: typeof ContactsRoute
   DashboardRoute: typeof DashboardRoute
   DevApiRoute: typeof DevApiRoute
-  DocsRoute: typeof DocsRoute
+  DocsRoute: typeof DocsRouteWithChildren
   DomainsRoute: typeof DomainsRoute
   EnvRoute: typeof EnvRoute
   FlowsRoute: typeof FlowsRoute
@@ -552,8 +708,133 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/docs/voice': {
+      id: '/docs/voice'
+      path: '/voice'
+      fullPath: '/docs/voice'
+      preLoaderRoute: typeof DocsVoiceRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/tickets': {
+      id: '/docs/tickets'
+      path: '/tickets'
+      fullPath: '/docs/tickets'
+      preLoaderRoute: typeof DocsTicketsRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/templates': {
+      id: '/docs/templates'
+      path: '/templates'
+      fullPath: '/docs/templates'
+      preLoaderRoute: typeof DocsTemplatesRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/surveys': {
+      id: '/docs/surveys'
+      path: '/surveys'
+      fullPath: '/docs/surveys'
+      preLoaderRoute: typeof DocsSurveysRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/projects': {
+      id: '/docs/projects'
+      path: '/projects'
+      fullPath: '/docs/projects'
+      preLoaderRoute: typeof DocsProjectsRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/payments': {
+      id: '/docs/payments'
+      path: '/payments'
+      fullPath: '/docs/payments'
+      preLoaderRoute: typeof DocsPaymentsRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/getting-started': {
+      id: '/docs/getting-started'
+      path: '/getting-started'
+      fullPath: '/docs/getting-started'
+      preLoaderRoute: typeof DocsGettingStartedRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/flows': {
+      id: '/docs/flows'
+      path: '/flows'
+      fullPath: '/docs/flows'
+      preLoaderRoute: typeof DocsFlowsRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/domains': {
+      id: '/docs/domains'
+      path: '/domains'
+      fullPath: '/docs/domains'
+      preLoaderRoute: typeof DocsDomainsRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/developer-api': {
+      id: '/docs/developer-api'
+      path: '/developer-api'
+      fullPath: '/docs/developer-api'
+      preLoaderRoute: typeof DocsDeveloperApiRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/contacts': {
+      id: '/docs/contacts'
+      path: '/contacts'
+      fullPath: '/docs/contacts'
+      preLoaderRoute: typeof DocsContactsRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/automations': {
+      id: '/docs/automations'
+      path: '/automations'
+      fullPath: '/docs/automations'
+      preLoaderRoute: typeof DocsAutomationsRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/api-keys': {
+      id: '/docs/api-keys'
+      path: '/api-keys'
+      fullPath: '/docs/api-keys'
+      preLoaderRoute: typeof DocsApiKeysRouteImport
+      parentRoute: typeof DocsRoute
+    }
   }
 }
+
+interface DocsRouteChildren {
+  DocsApiKeysRoute: typeof DocsApiKeysRoute
+  DocsAutomationsRoute: typeof DocsAutomationsRoute
+  DocsContactsRoute: typeof DocsContactsRoute
+  DocsDeveloperApiRoute: typeof DocsDeveloperApiRoute
+  DocsDomainsRoute: typeof DocsDomainsRoute
+  DocsFlowsRoute: typeof DocsFlowsRoute
+  DocsGettingStartedRoute: typeof DocsGettingStartedRoute
+  DocsPaymentsRoute: typeof DocsPaymentsRoute
+  DocsProjectsRoute: typeof DocsProjectsRoute
+  DocsSurveysRoute: typeof DocsSurveysRoute
+  DocsTemplatesRoute: typeof DocsTemplatesRoute
+  DocsTicketsRoute: typeof DocsTicketsRoute
+  DocsVoiceRoute: typeof DocsVoiceRoute
+}
+
+const DocsRouteChildren: DocsRouteChildren = {
+  DocsApiKeysRoute: DocsApiKeysRoute,
+  DocsAutomationsRoute: DocsAutomationsRoute,
+  DocsContactsRoute: DocsContactsRoute,
+  DocsDeveloperApiRoute: DocsDeveloperApiRoute,
+  DocsDomainsRoute: DocsDomainsRoute,
+  DocsFlowsRoute: DocsFlowsRoute,
+  DocsGettingStartedRoute: DocsGettingStartedRoute,
+  DocsPaymentsRoute: DocsPaymentsRoute,
+  DocsProjectsRoute: DocsProjectsRoute,
+  DocsSurveysRoute: DocsSurveysRoute,
+  DocsTemplatesRoute: DocsTemplatesRoute,
+  DocsTicketsRoute: DocsTicketsRoute,
+  DocsVoiceRoute: DocsVoiceRoute,
+}
+
+const DocsRouteWithChildren = DocsRoute._addFileChildren(DocsRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -564,7 +845,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactsRoute: ContactsRoute,
   DashboardRoute: DashboardRoute,
   DevApiRoute: DevApiRoute,
-  DocsRoute: DocsRoute,
+  DocsRoute: DocsRouteWithChildren,
   DomainsRoute: DomainsRoute,
   EnvRoute: EnvRoute,
   FlowsRoute: FlowsRoute,
