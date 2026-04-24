@@ -13,6 +13,7 @@ import { Route as VoiceRouteImport } from './routes/voice'
 import { Route as TicketsRouteImport } from './routes/tickets'
 import { Route as TemplatesRouteImport } from './routes/templates'
 import { Route as SurveysRouteImport } from './routes/surveys'
+import { Route as SitesRouteImport } from './routes/sites'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as ProjectsRouteImport } from './routes/projects'
@@ -34,11 +35,13 @@ import { Route as AutomationsRouteImport } from './routes/automations'
 import { Route as ApiKeysRouteImport } from './routes/api-keys'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SiteSlugRouteImport } from './routes/site.$slug'
 import { Route as SIdRouteImport } from './routes/s.$id'
 import { Route as DocsVoiceRouteImport } from './routes/docs.voice'
 import { Route as DocsTicketsRouteImport } from './routes/docs.tickets'
 import { Route as DocsTemplatesRouteImport } from './routes/docs.templates'
 import { Route as DocsSurveysRouteImport } from './routes/docs.surveys'
+import { Route as DocsSitesRouteImport } from './routes/docs.sites'
 import { Route as DocsProjectsRouteImport } from './routes/docs.projects'
 import { Route as DocsPaymentsRouteImport } from './routes/docs.payments'
 import { Route as DocsGettingStartedRouteImport } from './routes/docs.getting-started'
@@ -67,6 +70,11 @@ const TemplatesRoute = TemplatesRouteImport.update({
 const SurveysRoute = SurveysRouteImport.update({
   id: '/surveys',
   path: '/surveys',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitesRoute = SitesRouteImport.update({
+  id: '/sites',
+  path: '/sites',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SignupRoute = SignupRouteImport.update({
@@ -174,6 +182,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SiteSlugRoute = SiteSlugRouteImport.update({
+  id: '/site/$slug',
+  path: '/site/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SIdRoute = SIdRouteImport.update({
   id: '/s/$id',
   path: '/s/$id',
@@ -197,6 +210,11 @@ const DocsTemplatesRoute = DocsTemplatesRouteImport.update({
 const DocsSurveysRoute = DocsSurveysRouteImport.update({
   id: '/surveys',
   path: '/surveys',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsSitesRoute = DocsSitesRouteImport.update({
+  id: '/sites',
+  path: '/sites',
   getParentRoute: () => DocsRoute,
 } as any)
 const DocsProjectsRoute = DocsProjectsRouteImport.update({
@@ -267,6 +285,7 @@ export interface FileRoutesByFullPath {
   '/projects': typeof ProjectsRoute
   '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
+  '/sites': typeof SitesRoute
   '/surveys': typeof SurveysRoute
   '/templates': typeof TemplatesRoute
   '/tickets': typeof TicketsRoute
@@ -280,11 +299,13 @@ export interface FileRoutesByFullPath {
   '/docs/getting-started': typeof DocsGettingStartedRoute
   '/docs/payments': typeof DocsPaymentsRoute
   '/docs/projects': typeof DocsProjectsRoute
+  '/docs/sites': typeof DocsSitesRoute
   '/docs/surveys': typeof DocsSurveysRoute
   '/docs/templates': typeof DocsTemplatesRoute
   '/docs/tickets': typeof DocsTicketsRoute
   '/docs/voice': typeof DocsVoiceRoute
   '/s/$id': typeof SIdRoute
+  '/site/$slug': typeof SiteSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -308,6 +329,7 @@ export interface FileRoutesByTo {
   '/projects': typeof ProjectsRoute
   '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
+  '/sites': typeof SitesRoute
   '/surveys': typeof SurveysRoute
   '/templates': typeof TemplatesRoute
   '/tickets': typeof TicketsRoute
@@ -321,11 +343,13 @@ export interface FileRoutesByTo {
   '/docs/getting-started': typeof DocsGettingStartedRoute
   '/docs/payments': typeof DocsPaymentsRoute
   '/docs/projects': typeof DocsProjectsRoute
+  '/docs/sites': typeof DocsSitesRoute
   '/docs/surveys': typeof DocsSurveysRoute
   '/docs/templates': typeof DocsTemplatesRoute
   '/docs/tickets': typeof DocsTicketsRoute
   '/docs/voice': typeof DocsVoiceRoute
   '/s/$id': typeof SIdRoute
+  '/site/$slug': typeof SiteSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -350,6 +374,7 @@ export interface FileRoutesById {
   '/projects': typeof ProjectsRoute
   '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
+  '/sites': typeof SitesRoute
   '/surveys': typeof SurveysRoute
   '/templates': typeof TemplatesRoute
   '/tickets': typeof TicketsRoute
@@ -363,11 +388,13 @@ export interface FileRoutesById {
   '/docs/getting-started': typeof DocsGettingStartedRoute
   '/docs/payments': typeof DocsPaymentsRoute
   '/docs/projects': typeof DocsProjectsRoute
+  '/docs/sites': typeof DocsSitesRoute
   '/docs/surveys': typeof DocsSurveysRoute
   '/docs/templates': typeof DocsTemplatesRoute
   '/docs/tickets': typeof DocsTicketsRoute
   '/docs/voice': typeof DocsVoiceRoute
   '/s/$id': typeof SIdRoute
+  '/site/$slug': typeof SiteSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -393,6 +420,7 @@ export interface FileRouteTypes {
     | '/projects'
     | '/settings'
     | '/signup'
+    | '/sites'
     | '/surveys'
     | '/templates'
     | '/tickets'
@@ -406,11 +434,13 @@ export interface FileRouteTypes {
     | '/docs/getting-started'
     | '/docs/payments'
     | '/docs/projects'
+    | '/docs/sites'
     | '/docs/surveys'
     | '/docs/templates'
     | '/docs/tickets'
     | '/docs/voice'
     | '/s/$id'
+    | '/site/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -434,6 +464,7 @@ export interface FileRouteTypes {
     | '/projects'
     | '/settings'
     | '/signup'
+    | '/sites'
     | '/surveys'
     | '/templates'
     | '/tickets'
@@ -447,11 +478,13 @@ export interface FileRouteTypes {
     | '/docs/getting-started'
     | '/docs/payments'
     | '/docs/projects'
+    | '/docs/sites'
     | '/docs/surveys'
     | '/docs/templates'
     | '/docs/tickets'
     | '/docs/voice'
     | '/s/$id'
+    | '/site/$slug'
   id:
     | '__root__'
     | '/'
@@ -475,6 +508,7 @@ export interface FileRouteTypes {
     | '/projects'
     | '/settings'
     | '/signup'
+    | '/sites'
     | '/surveys'
     | '/templates'
     | '/tickets'
@@ -488,11 +522,13 @@ export interface FileRouteTypes {
     | '/docs/getting-started'
     | '/docs/payments'
     | '/docs/projects'
+    | '/docs/sites'
     | '/docs/surveys'
     | '/docs/templates'
     | '/docs/tickets'
     | '/docs/voice'
     | '/s/$id'
+    | '/site/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -517,11 +553,13 @@ export interface RootRouteChildren {
   ProjectsRoute: typeof ProjectsRoute
   SettingsRoute: typeof SettingsRoute
   SignupRoute: typeof SignupRoute
+  SitesRoute: typeof SitesRoute
   SurveysRoute: typeof SurveysRoute
   TemplatesRoute: typeof TemplatesRoute
   TicketsRoute: typeof TicketsRoute
   VoiceRoute: typeof VoiceRoute
   SIdRoute: typeof SIdRoute
+  SiteSlugRoute: typeof SiteSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -552,6 +590,13 @@ declare module '@tanstack/react-router' {
       path: '/surveys'
       fullPath: '/surveys'
       preLoaderRoute: typeof SurveysRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sites': {
+      id: '/sites'
+      path: '/sites'
+      fullPath: '/sites'
+      preLoaderRoute: typeof SitesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/signup': {
@@ -701,6 +746,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/site/$slug': {
+      id: '/site/$slug'
+      path: '/site/$slug'
+      fullPath: '/site/$slug'
+      preLoaderRoute: typeof SiteSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/s/$id': {
       id: '/s/$id'
       path: '/s/$id'
@@ -734,6 +786,13 @@ declare module '@tanstack/react-router' {
       path: '/surveys'
       fullPath: '/docs/surveys'
       preLoaderRoute: typeof DocsSurveysRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/sites': {
+      id: '/docs/sites'
+      path: '/sites'
+      fullPath: '/docs/sites'
+      preLoaderRoute: typeof DocsSitesRouteImport
       parentRoute: typeof DocsRoute
     }
     '/docs/projects': {
@@ -812,6 +871,7 @@ interface DocsRouteChildren {
   DocsGettingStartedRoute: typeof DocsGettingStartedRoute
   DocsPaymentsRoute: typeof DocsPaymentsRoute
   DocsProjectsRoute: typeof DocsProjectsRoute
+  DocsSitesRoute: typeof DocsSitesRoute
   DocsSurveysRoute: typeof DocsSurveysRoute
   DocsTemplatesRoute: typeof DocsTemplatesRoute
   DocsTicketsRoute: typeof DocsTicketsRoute
@@ -828,6 +888,7 @@ const DocsRouteChildren: DocsRouteChildren = {
   DocsGettingStartedRoute: DocsGettingStartedRoute,
   DocsPaymentsRoute: DocsPaymentsRoute,
   DocsProjectsRoute: DocsProjectsRoute,
+  DocsSitesRoute: DocsSitesRoute,
   DocsSurveysRoute: DocsSurveysRoute,
   DocsTemplatesRoute: DocsTemplatesRoute,
   DocsTicketsRoute: DocsTicketsRoute,
@@ -858,11 +919,13 @@ const rootRouteChildren: RootRouteChildren = {
   ProjectsRoute: ProjectsRoute,
   SettingsRoute: SettingsRoute,
   SignupRoute: SignupRoute,
+  SitesRoute: SitesRoute,
   SurveysRoute: SurveysRoute,
   TemplatesRoute: TemplatesRoute,
   TicketsRoute: TicketsRoute,
   VoiceRoute: VoiceRoute,
   SIdRoute: SIdRoute,
+  SiteSlugRoute: SiteSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

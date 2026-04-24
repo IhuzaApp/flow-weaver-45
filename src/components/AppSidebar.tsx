@@ -20,6 +20,7 @@ import {
   Code2,
   Zap,
   Globe,
+  LayoutTemplate,
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -35,6 +36,7 @@ const nav: Array<{ to: string; label: string; icon: typeof LayoutDashboard; exac
   { to: "/templates", label: "Templates", icon: FileText },
   { to: "/contacts", label: "Contacts", icon: FolderKanban },
   { to: "/surveys", label: "Surveys", icon: FileText },
+  { to: "/sites", label: "Sites", icon: LayoutTemplate },
   { to: "/playground", label: "API Playground", icon: TerminalSquare },
   { to: "/tickets", label: "Support Tickets", icon: Ticket, section: "Engage" },
   { to: "/voice", label: "Voice Support", icon: PhoneCall },
