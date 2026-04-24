@@ -84,6 +84,7 @@ function SiteHeader() {
           <a href="#ai" className="hover:text-foreground transition">AI</a>
           <a href="#platform" className="hover:text-foreground transition">Platform</a>
           <a href="#pricing" className="hover:text-foreground transition">Pricing</a>
+          <Link to="/docs" className="hover:text-foreground transition">Docs</Link>
         </nav>
         <div className="flex-1" />
         <ThemeToggle />
@@ -172,16 +173,19 @@ function Hero() {
 }
 
 function LogosStrip() {
-  const logos = ["Northwind", "Acme", "Vercel", "Stripe", "Linear", "Notion"];
+  const logos = [
+    "Shopify", "Stripe", "HubSpot", "Vercel", "Linear", "Notion",
+    "Slack", "Intercom", "Zendesk", "Klaviyo", "Segment", "Figma",
+  ];
   return (
     <div className="border-y border-border bg-muted/30">
-      <div className="mx-auto max-w-7xl px-6 py-8">
+      <div className="mx-auto max-w-7xl px-6 py-10">
         <p className="text-center text-xs uppercase tracking-wider text-muted-foreground">
-          Trusted by teams shipping at scale
+          Powering customer comms for teams of every size
         </p>
-        <div className="mt-5 flex flex-wrap items-center justify-center gap-x-10 gap-y-3">
+        <div className="mt-6 grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-x-6 gap-y-4 items-center justify-items-center">
           {logos.map((l) => (
-            <span key={l} className="text-base font-semibold text-muted-foreground/70">
+            <span key={l} className="text-base font-semibold text-muted-foreground/70 hover:text-foreground transition">
               {l}
             </span>
           ))}
@@ -453,11 +457,11 @@ function AutomationsSection() {
         <div className="lg:sticky lg:top-24">
           <div className="text-xs font-semibold uppercase tracking-wider text-primary">Automations</div>
           <h2 className="mt-2 text-3xl sm:text-4xl font-semibold tracking-tight text-foreground">
-            Pre-built workflows your team can turn on today.
+            Design automations <em className="not-italic text-gradient-primary">your way</em>.
           </h2>
           <p className="mt-4 text-muted-foreground">
-            A library of battle-tested automations for support, sales and marketing.
-            Customize with one click — or build your own from scratch in the flow builder.
+            Build any automation from scratch — pick a trigger, chain the actions you want, in any order.
+            Templates are optional starting points, never fixed paths. Every step is yours to change.
           </p>
           <Link
             to="/automations"
@@ -720,7 +724,7 @@ function SiteFooter() {
           <a href="#" className="hover:text-foreground transition">Privacy</a>
           <a href="#" className="hover:text-foreground transition">Terms</a>
           <a href="#" className="hover:text-foreground transition">Status</a>
-          <a href="#" className="hover:text-foreground transition">Docs</a>
+          <Link to="/docs" className="hover:text-foreground transition">Docs</Link>
         </div>
       </div>
     </footer>
